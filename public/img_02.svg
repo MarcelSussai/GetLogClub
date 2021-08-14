@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 329.64 312">
+  <g id="Camada_2" data-name="Camada 2">
+    <g id="Camada_1-2" data-name="Camada 1">
+      <rect width="329.64" height="312" style="fill: none"/>
+      <g>
+        <path d="M170.81,2.53C86.25,2.53,17.39,71.38,17.39,155.92S86.25,309.3,170.81,309.3s153.43-68.85,153.43-153.38S255.38,2.53,170.81,2.53Z" style="fill: #f8f0ee;stroke: #fff;stroke-miterlimit: 10"/>
+        <path d="M170.81,2.53C86.25,2.53,17.39,71.38,17.39,155.92S86.25,309.3,170.81,309.3s153.43-68.85,153.43-153.38S255.38,2.53,170.81,2.53Z" style="fill: none;stroke: #fff;stroke-miterlimit: 10;stroke-width: 3px"/>
+        <path d="M170.81,309.47S94,265.26,94,155.24C94,45.39,170.81,2.53,170.81,2.53" style="fill: none;stroke: #fff;stroke-miterlimit: 10;stroke-width: 3px"/>
+        <path d="M170.81,309.47s76.8-44.21,76.8-154.23c0-109.85-76.8-152.71-76.8-152.71" style="fill: none;stroke: #fff;stroke-miterlimit: 10;stroke-width: 3px"/>
+        <path d="M30,94.83H311.58" style="fill: none;stroke: #fff;stroke-miterlimit: 10;stroke-width: 3px"/>
+        <path d="M30,217H311.58" style="fill: none;stroke: #fff;stroke-miterlimit: 10;stroke-width: 3px"/>
+        <path d="M259.93,57a34.77,34.77,0,0,1,69.54,0c0,19.24-34.77,67.67-34.77,67.67S259.93,76.27,259.93,57Z" style="fill: #95523d"/>
+        <path d="M308.21,55.68a13.34,13.34,0,1,1-13.34-13.33A13.25,13.25,0,0,1,308.21,55.68Z" style="fill: #fff"/>
+        <path d="M308.21,55.68a13.34,13.34,0,1,1-13.34-13.33A13.25,13.25,0,0,1,308.21,55.68Z" style="fill: none;stroke: #6b3a2c;stroke-width: 3px"/>
+        <path d="M0,127.4a34.77,34.77,0,0,1,69.54,0c0,19.23-34.77,67.66-34.77,67.66S0,146.63,0,127.4Z" style="fill: #95523d"/>
+        <path d="M48.1,126.05a13.33,13.33,0,1,1-13.33-13.33A13.25,13.25,0,0,1,48.1,126.05Z" style="fill: #fff"/>
+        <path d="M48.1,126.05a13.33,13.33,0,1,1-13.33-13.33A13.25,13.25,0,0,1,48.1,126.05Z" style="fill: none;stroke: #6b3a2c;stroke-width: 3px"/>
+        <path d="M294.87,124.7c4.9,12.32-2,54.16-27,52.81C203.22,174,238,19.74,165.58,36.11c-41.86,9.45-31.56,78.3-13.84,103.27S226,269.48,173.18,269.82c-25,.16-40.68-101.08-73.26-92.31-28.18,7.6-33.25,91.12-65.15,17.55" style="fill: none;stroke: #b96c55;stroke-linecap: round;stroke-width: 3px;stroke-dasharray: 15,15"/>
+      </g>
+    </g>
+  </g>
+</svg>

@@ -1,6 +1,8 @@
 
 import Head from '../components/head'
 import Header from '../components/header/header'
+import Home from '../components/home/home'
+
 
 const GetLogClub_Home = () => {
 
@@ -9,7 +11,7 @@ const GetLogClub_Home = () => {
     <>
       <Head title="Home" />
       <Header />
-
+      <Home />
     </>
 )}
 

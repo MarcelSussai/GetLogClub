@@ -1,5 +1,5 @@
-
-
+import { useEffect, useState } from 'react';
+import styled from 'styled-components';
 
 export const theme = {
   colors: {
@@ -90,7 +90,11 @@ export const theme = {
     blackShadow:  '#00000016',
     blackShadow2: '#00000048',
     blackShadow3: '#00000032',
-    greenShadow:  '#BCFD0040',
+    blackShadow4: '#00000024',
+    greenShadow:  '#BCFD0012',
+    blueShadow:  '#00BCFD12',
+    redShadow:  '#FD410026',
+    yellowShadow:  '#FDC00026',
   },
 }
 
@@ -105,3 +109,153 @@ export const CBsValues = {
   cb_03: '0.6, -0.28, 0.735, 0.045',
   cb_04: '0.785, 0.135, 0.15, 0.86',
 }
+
+// componentes fábrica ____________________________________________
+export const S_main_base = styled.main`
+  ${fontF}
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 88px;
+  margin-bottom: 96px;
+  width: 100%;
+  padding: 16px;
+  
+  ${cusMQ(768)} {
+    padding: 32px;
+  }
+`
+// ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
+
+
+
+// Input_01 _______________________________________________________
+const S_container_input = styled.div`
+  ${fontF}
+  position: relative;
+  width: 100%;
+`
+const S_label = styled.label`
+  position: absolute;
+  top: -10px;
+  left: 8px;
+  line-height: 1;
+  font-size: 14px;
+  font-weight: 700;
+  padding: 4px 8px 4px 8px;
+  background: ${ theme.colors.white };
+  border-radius: 50%;
+  color: ${ theme.colors.blue.c600 };
+`
+const S_input = styled.input`
+  ${cusTR('.2s')}
+  padding: 12px 16px 4px 16px;
+  width: 100%;
+  font-weight: 500;
+  border-top: solid 4px ${ theme.colors.blue.c600 };
+  border-right: solid 1px ${ theme.colors.blue.c600 };
+  border-bottom: solid 2px ${ theme.colors.blue.c600 };
+  border-left: solid 1px ${ theme.colors.blue.c600 };
+  background: ${ theme.colors.white };
+  border-top-left-radius: 8px;
+  /* border-top-right-radius: 8px; */
+  border-bottom-right-radius: 8px;
+  color: ${ theme.colors.gray.c800 };
+  
+  &::placeholder {
+    color: ${ theme.colors.gray.c400 };
+  }
+  &:focus {
+    outline: none;
+    border-top: solid 4px ${ theme.colors.blue.c700 };
+    border-right: solid 1px ${ theme.colors.blue.c700 };
+    border-bottom: solid 2px ${ theme.colors.blue.c700 };
+    border-left: solid 1px ${ theme.colors.blue.c700 };
+  }
+`
+
+export const Input_01 = (props) => {
+
+  const { txtLabel, txtPh, oc, name, type } = props
+
+  return (
+    <>
+      <S_container_input>
+        <S_label HTMLFor={name}> {txtLabel || 'texto'} </S_label>
+        <S_input onChange={oc} name={name} id={name} type={type || 'text'} placeholder={txtPh} />
+      </S_container_input>
+    </>
+  )
+}
+// ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
+
+
+// CheckBox _______________________________________________________
+  const S_container_chk = styled.div`
+    ${cusTR('.2s')}
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    padding: 0 0 4px 0;
+    border-bottom: solid 1px ${ theme.colors.white };
+    &:hover {
+      border-bottom: solid 1px ${ theme.colors.aqua.c500 };
+    }
+  `
+  const S_text_chk = styled.p`
+    font-size: 12px;
+    color: ${ theme.colors.aqua.c500 };
+    font-weight: 600;
+
+    /* padding: 4px 8px; */
+  `
+  const S_box_chk = styled.div`
+    width: 24px;
+    height: 24px;
+    padding: 4px;
+    position: relative;
+    border: solid 1px ${ theme.colors.aqua.c500 };
+    border-radius: 4px;
+    ${cusTR('.2s')}
+    
+    &::before {
+      ${cusTR('.2s')}
+      border-radius: 2px;
+      content: '';
+      position: absolute;
+      top: 4px;
+      left: 4px;
+      background: ${ (props) => props.sele ? theme.colors.aqua.c500 : '' };
+      width: 14px;
+      height: 14px;
+
+    }
+  `
+
+  export const Chk_01 = (props) => {
+
+    const [sel, setSel] = useState(Boolean)
+
+    const handle_chk = () => {
+      setSel(!sel)
+    }
+
+    useEffect(() => {
+      console.log(sel);
+    }, [sel])
+
+
+    return (
+      <>
+        <S_container_chk onClick={handle_chk}>
+          <S_text_chk > {`Lembrar senha`} </S_text_chk>
+          <S_box_chk sele={sel} />
+        </S_container_chk>
+      </>
+    )
+  }
+// ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾

@@ -1,4 +1,6 @@
 import { createGlobalStyle } from 'styled-components'
+import { theme } from './theme'
+
 
 
 export const GlobalStyle = createGlobalStyle`
@@ -36,6 +38,8 @@ export const GlobalStyle = createGlobalStyle`
     padding: 0;
     line-height: 1.6;
     overflow-x: hidden;
+    background: linear-gradient(to bottom, ${ theme.colors.white } 0%, ${ theme.colors.yellowShadow } 60%, ${ theme.colors.redShadow } 80% );
+    background-attachment: fixed;
   }
   ul[class], ol[class] {
     list-style: none;
