@@ -1,12 +1,11 @@
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { cusMQ, cusTR, fontF, Input_01, S_main_base } from "../../config/theme";
-
+import { useRouter } from 'next/router'
 
 
 const S_main = styled(S_main_base)`
 `
-
 const S_section_01 = styled.section`
   width: 100%;
   background: ${ ({theme}) => theme.colors.white };
@@ -24,13 +23,6 @@ const S_section_01 = styled.section`
   }
 `
 
-const S_h1 = styled.h1`
-  font-size: 32px;
-  font-weight: 900;
-  line-height: 1;
-  color: ${ ({theme}) => theme.colors.blue.c700 };
-`
-
 const S_div_01 = styled.div`
   width: 100%;
   padding: 16px;
@@ -39,14 +31,12 @@ const S_div_01 = styled.div`
   justify-content: center;
   border-bottom: solid 1px ${ ({theme}) => theme.colors.red.c300 };
 `
-
 const S_div_02 = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
   padding: 16px;
 `
-
 const S_div_03 = styled.div`
   padding: 4px 16px;
   border-bottom: solid 1px ${ ({theme}) => theme.colors.blue.c400 };
@@ -81,10 +71,6 @@ const S_div_05 = styled.div`
   border-radius: 18px;
   background: ${ ({theme, sel}) => sel ? theme.colors.blue.c600 : '' };
 `
-const S_p_01 = styled.p`
-  font-weight: 500;
-  color: ${ ({theme}) => theme.colors.blue.c700 };
-`
 const S_div_06 = styled.div`
   width: 100%;
   padding: 16px;
@@ -94,6 +80,18 @@ const S_div_06 = styled.div`
   align-items: center;
   gap: 32px;
 `
+
+const S_h1 = styled.h1`
+  font-size: 32px;
+  font-weight: 900;
+  line-height: 1;
+  color: ${ ({theme}) => theme.colors.blue.c700 };
+`
+const S_p_01 = styled.p`
+  font-weight: 500;
+  color: ${ ({theme}) => theme.colors.blue.c700 };
+`
+
 const S_btn_01 = styled.button`
   ${cusTR('.2s')}
   padding: 8px 16px 8px 16px;
@@ -114,6 +112,7 @@ const S_btn_01 = styled.button`
 
 
 const Register = () => {
+  const router = useRouter()
 
   const [selecionado, setSelecionado] = useState('r')
 
@@ -123,10 +122,20 @@ const Register = () => {
   const hdl_inpt_email = (e) => console.log(e.target.value);
   const hdl_inpt_senha = (e) => console.log(e.target.value);
   const hdl_inpt_confirmarSenha = (e) => console.log(e.target.value);
+  
 
   useEffect(() => {
     console.log(selecionado);
   }, [selecionado])
+  
+
+  const hdl_click_01 = (e) => {
+    e.preventDefault()
+    if(selecionado === 'r') {
+      router.push('/cadastroR')
+    }
+  }
+
 
   return (
   <>
@@ -173,7 +182,7 @@ const Register = () => {
           />
         </S_div_06>
 
-        <S_btn_01>Próximo</S_btn_01>
+        <S_btn_01 onClick={hdl_click_01}>Próximo</S_btn_01>
 
       </S_section_01>
 

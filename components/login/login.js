@@ -5,7 +5,6 @@ import {
 } from "../../config/theme";
 
 
-
 const S_main = styled(S_main_base)`
 `
 const S_section_01 = styled.section`
@@ -121,10 +120,12 @@ const S_btn_01 = styled.button`
 `
 
 
-const handle_01 = (e) => console.log(e.target.value)
-const handle_02 = (e) => console.log(e.target.value)
 
 const Login = () => {
+  
+  const handle_01 = (e) => console.log(e.target.value)
+  const handle_02 = (e) => console.log(e.target.value)
+
   return (
   <>
     <S_main>
