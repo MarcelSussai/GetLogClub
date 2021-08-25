@@ -65,6 +65,7 @@ const S_div_03 = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  padding: 8px;
   
   ${cusMQ(375)} {
     /* flex-direction: row;
@@ -74,6 +75,20 @@ const S_div_03 = styled.div`
     flex-direction: row;
     justify-content: space-between;
     padding: 16px;
+  }
+  .form {
+    width: 100%;
+    padding: 0;
+    display: flex;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    ${cusMQ(768)} {
+      flex-direction: row;
+      justify-content: space-between;
+      padding: 16px;
+    }
   }
 `
 const S_div_04 = styled.div`
@@ -134,14 +149,16 @@ const Login = () => {
           <S_h1> {`Entrar`} </S_h1>
         </S_div_01>
         <S_div_03>
-          <S_div_02>
-            <Input_01 oc={handle_01} txtLabel="E-mail" name="email" txtPh="Digite aqui seu e-mail" />
-            <Input_01 oc={handle_02} txtLabel="Senha" name="senha" txtPh="Digite aqui sua senha" type="password" />
-            <S_div_04>
-              <S_a_01> {`Esqueci a senha`} </S_a_01>
-              <Chk_01 />
-            </S_div_04>
-          </S_div_02>
+          <form className="form">
+            <S_div_02>
+              <Input_01 oc={handle_01} txtLabel="E-mail" name="email" txtPh="Digite aqui seu e-mail" />
+              <Input_01 oc={handle_02} txtLabel="Senha" name="senha" txtPh="Digite aqui sua senha" type="password" />
+              <S_div_04>
+                <S_a_01> {`Esqueci a senha`} </S_a_01>
+                <Chk_01 />
+              </S_div_04>
+            </S_div_02>
+          </form>
         </S_div_03>
         <S_btn_01> {`Entrar`} </S_btn_01>
       </S_section_01>

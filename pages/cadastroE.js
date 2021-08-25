@@ -1,19 +1,19 @@
 
-import Rcad from '../components/cadastro/Rcad'
+import Ecad from '../components/cadastro/Ecad'
 import Head from '../components/head'
 import Header from '../components/header/header'
 
 
 
-const CadastroR = () => {
+const CadastroE = () => {
 
 
   return (
     <>
       <Head title="Cadastro - Restaurante" />
       <Header />
-      <Rcad />
+      <Ecad />
     </>
 )}
 
-export default CadastroR
+export default CadastroE

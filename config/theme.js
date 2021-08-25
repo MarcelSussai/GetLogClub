@@ -182,7 +182,7 @@ export const Input_01 = (props) => {
     <>
       <S_container_input>
         <S_label HTMLFor={name}> {txtLabel || 'texto'} </S_label>
-        <S_input onChange={oc} name={name} id={name} type={type || 'text'} placeholder={txtPh} />
+        <S_input autoComplete={type === 'password' ? 'current-password' : ''} onChange={oc} name={name} id={name} type={type || 'text'} placeholder={txtPh} />
       </S_container_input>
     </>
   )
@@ -238,6 +238,8 @@ export const Input_01 = (props) => {
 
   export const Chk_01 = (props) => {
 
+    const { txtChk, capture } = props
+
     const [sel, setSel] = useState(Boolean)
 
     const handle_chk = () => {
@@ -246,13 +248,14 @@ export const Input_01 = (props) => {
 
     useEffect(() => {
       console.log(sel);
+      capture ? capture(sel) : ''
     }, [sel])
 
 
     return (
       <>
         <S_container_chk onClick={handle_chk}>
-          <S_text_chk > {`Lembrar senha`} </S_text_chk>
+          <S_text_chk > { txtChk ? txtChk : `Lembrar senha`} </S_text_chk>
           <S_box_chk sele={sel} />
         </S_container_chk>
       </>

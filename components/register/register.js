@@ -134,6 +134,9 @@ const Register = () => {
     if(selecionado === 'r') {
       router.push('/cadastroR')
     }
+    if(selecionado === 'e') {
+      router.push('/cadastroE')
+    }
   }
 
 

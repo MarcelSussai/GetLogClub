@@ -33,7 +33,7 @@ const S_form = styled.form`
   justify-content: center;
   flex-direction: column;
   gap: 16px;
-
+  
   ${cusMQ(560)} {
     display: grid;
     grid-template-columns: repeat(8, 1fr);
@@ -42,58 +42,38 @@ const S_form = styled.form`
       "a    a    a    a    b    b    b    b"
       "c    c    c    c    d    d    d    d"
       "e    e    e    e    f    f    f    f"
-      "g    g    g    g    .    .    .    ."
+      "g    g    g    g    o    o    o    o"
       "sub1 sub1 sub1 sub1 sub1 sub1 sub1 sub1"
       "h    h    h    h    i    i    j    j"
       "k    k    l    l    m    m    n    n"
       "hr1  hr1  hr1  hr1  hr1  hr1  hr1  hr1 "
-      "tit2 tit2 tit2 tit2 tit2 tit2 tit2 tit2"
-      "o    o    o    o    p    p    p    p"
-      "q    q    q    q    r    r    r    r"
-      "sub2 sub2 sub2 sub2 sub2 sub2 sub2 sub2"
-      "s    s    s    s    t    t    u    u"
-      "v    v    w    w    x    x    y    y"
+      "sub2 sub2 sub2 sub2  sub2 sub2 sub2 sub2"
+      "p    p    p    p    p    p    p    p"
       "hr2  hr2  hr2  hr2  hr2  hr2  hr2  hr2 "
-      ".    .    .    .    z    z    z    z"
+      "tit2 tit2 tit2 tit2 tit2 tit2 tit2 tit2"
+      "q    q    q    q    r    r    r    r"
+      "s    s    s    s    t    t    t    t"
+      ".    .    .    .    .    u    u    u"
     ;
   }
-  /* ${cusMQ(560)} {
-    grid-template-areas: 
-      "tit1 tit1 tit1 tit1 tit1 tit1 tit1 tit1"
-      "a    a    a    a    b    b    b    b"
-      "c    c    c    c    d    d    d    d"
-      "e    e    f    f    f    g    g    g"
-      "sub1 sub1 sub1 sub1 sub1 sub1 sub1 sub1"
-      "h    h    h    h    i    i    j    j"
-      "k    k    l    l    m    m    n    n"
-      "hr1  hr1  hr1  hr1  hr1  hr1  hr1  hr1 "
-      "tit2 tit2 tit2 tit2 tit2 tit2 tit2 tit2"
-      "o    o    o    o    p    p    p    p"
-      "q    q    q    q    r    r    r    r"
-      "sub2 sub2 sub2 sub2 sub2 sub2 sub2 sub2"
-      "s    s    s    s    t    t    u    u"
-      "v    v    w    w    x    x    y    y"
-      "hr2  hr2  hr2  hr2  hr2  hr2  hr2  hr2 "
-      ".    .    .    .    z    z    z    z"
-    ;
-  } */
+  
   ${cusMQ(1024)} {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
     grid-template-areas: 
       "tit1 tit1 tit1 tit1 tit1 tit1 tit1 tit1"
-      "a    a    a    b    b    b    c    c"
-      "d    d    e    e    f    f    g    g"
+      "a    a    b    b    c    c    d    d"
+      "e    e    f    f    g    g    o    o"
       "sub1 sub1 sub1 sub1 sub1 sub1 sub1 sub1"
       "h    h    h    h    i    i    j    j"
       "k    k    l    l    m    m    n    n"
       "hr1  hr1  hr1  hr1  hr1  hr1  hr1  hr1 "
-      "tit2 tit2 tit2 tit2 tit2 tit2 tit2 tit2"
-      "o    o    o    o    p    p    p    p"
-      "q    q    q    q    r    r    r    r"
       "sub2 sub2 sub2 sub2 sub2 sub2 sub2 sub2"
-      "s    s    s    s    t    t    u    u"
-      "v    v    w    w    x    x    y    y"
+      "p    p    p    p    p    p    .    ."
       "hr2  hr2  hr2  hr2  hr2  hr2  hr2  hr2 "
-      ".    .    .    .    .    z    z    z"
+      "tit2 tit2 tit2 tit2 tit2 tit2 tit2 tit2"
+      "q    q    r    r    s    s    t    t"
+      ".    .    .    .    .    u    u    u"
     ;
   }
 `
@@ -119,6 +99,50 @@ const S_btn_01 = styled.button`
 const S_div_01 = styled.div`
   grid-area: ${({ga}) => ga};
   font-size: 12px;
+`
+const S_div_02 = styled.div`
+  grid-area: ${ ({ga}) => ga };
+  display: grid;
+  grid-template-columns: 80px 1fr;
+  width: 100%;
+
+  ${cusMQ(560)} {
+    grid-template-columns: 120px 1fr;
+  }
+  /* ${cusMQ(1024)} {
+    width: 64%;
+  } */
+`
+const S_div_03 = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-right: solid 1px ${ ({theme}) => theme.colors.brown.c600 };
+  border-left: ${ ({theme, on}) => on === 'y' ? 'solid 1px' + theme.colors.brown.c600 : 'solid 1px' + theme.colors.white };
+  border-bottom: ${ ({theme, on}) => on === 'y' ? 'solid 1px' + theme.colors.brown.c600 : 'solid 1px' + theme.colors.white };
+  cursor: pointer;
+  ${cusTR('.2s')}
+`
+const S_div_04 = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  
+  align-items: center;
+  cursor: pointer;
+  height: 100%;
+  padding-bottom: 16px;
+  border-right: ${ ({theme, on}) => on === 'y' ? 'solid 1px' + theme.colors.brown.c600 : 'solid 1px' + theme.colors.white };
+  border-bottom: ${ ({theme, on}) => on === 'y' ? 'solid 1px' + theme.colors.brown.c600 : 'solid 1px' + theme.colors.white };
+  ${cusTR('.2s')}
+`
+const S_div_05 = styled.div`
+  width: 100%;
+  height: 16px;
+  background: ${ ({theme, on}) => on === 'y' ? theme.colors.brown.c500 : theme.colors.white };
+  /* border: solid 1px ${ ({theme, on}) => on === 'y' ? theme.colors.brown.c600 : theme.colors.gray.c300 }; */
+  margin-bottom: 16px;
+  ${cusTR('.2s')}
 `
 
 const S_h1 = styled.h1`
@@ -168,7 +192,7 @@ const S_h2 = styled.h2`
 const S_h3 = styled.h3`
   grid-area: ${ ({ga}) => ga };
   width: 100%;
-  line-height: 1;
+  line-height: 1.4;
   font-weight: 600;
   padding: 4px;
   font-size: 12px;
@@ -189,6 +213,11 @@ const S_h3 = styled.h3`
     font-size: 22px;
   }
 `
+const S_img_01 = styled.img`
+  width: 48%;
+  opacity: ${ ({on}) => on === 'y' ? '1' : '.4'};
+  margin-bottom: 8px;
+`
 
 const S_hr_01 = styled.hr`
   width: 100%;
@@ -199,9 +228,9 @@ const S_hr_01 = styled.hr`
 
 
 
-const Rcad = () => {
+const Ecad = () => {
 
-  // Dados pessoais do representante
+  
   const [nome, setNome] =                 useState('')
   const [rg, setRg] =                     useState('')
   const [cpf, setCpf] =                   useState('')
@@ -217,19 +246,25 @@ const Rcad = () => {
   const [estado, setEstado] =             useState('')
   const [cep, setCep] =                   useState('')
   
-  // dados do restaurante
-  const [nomeR, setNomeR] =               useState('')
-  const [rSocial, setRSocial] =           useState('')
-  const [cnpj, setCnpj] =                 useState('')
   const [tel_02, setTel_02] =             useState('')
+  const [restaurante, setRestaurante] =   useState('')
 
-  const [ruaR, setRuaR] =                 useState('')
-  const [numeroR, setNumeroR] =           useState('')
-  const [obsR, setObsR] =                 useState('')
-  const [bairroR, setBairroR] =           useState('')
-  const [cidadeR, setCidadeR] =           useState('')
-  const [estadoR, setEstadoR] =           useState('')
-  const [cepR, setCepR] =                 useState('')
+  const [ano, setAno] =                   useState('')
+  const [modelo, setModelo] =             useState('')
+  const [placa, setPlaca] =               useState('')
+  const [cor, setCor] =                   useState('')
+
+  const [onG, setOnG] =                   useState(true)
+  const [onR, setOnR] =                   useState(false)
+  const hdl_choice_G = () => {
+    setOnG(true)
+    setOnR(false)
+  }
+  const hdl_choice_R = () => {
+    setOnG(false)
+    setOnR(true)
+  }
+
 
   // onChange, type, value, name, placeholder, textLabel, ga
 
@@ -247,27 +282,22 @@ const Rcad = () => {
   const hdl_cidade          = (e) => setCidade(e.target.value)
   const hdl_estado          = (e) => setEstado(e.target.value)
   const hdl_cep             = (e) => setCep(e.target.value)
-  const hdl_nome_r          = (e) => setNomeR(e.target.value)
-  const hdl_r_social        = (e) => setRSocial(e.target.value)
-  const hdl_cnpj            = (e) => setCnpj(e.target.value)
   const hdl_tel_02          = (e) => setTel_02(e.target.value)
-  const hdl_rua_r           = (e) => setRuaR(e.target.value)
-  const hdl_numero_r        = (e) => setNumeroR(e.target.value)
-  const hdl_obs_r           = (e) => setObsR(e.target.value)
-  const hdl_bairro_r        = (e) => setBairroR(e.target.value)
-  const hdl_cidade_r        = (e) => setCidadeR(e.target.value)
-  const hdl_estado_r        = (e) => setEstadoR(e.target.value)
-  const hdl_cep_r           = (e) => setCepR(e.target.value)
+  const hdl_restaurante     = (e) => setRestaurante(e.target.value)
+  const hdl_ano             = (e) => setAno(e.target.value)
+  const hdl_modelo          = (e) => setModelo(e.target.value)
+  const hdl_placa           = (e) => setPlaca(e.target.value)
+  const hdl_cor             = (e) => setCor(e.target.value)
 
   return (
   <>
     <S_main>
       <S_section_01>
 
-        <S_h1> {`Cadastro de Restaurantes`} </S_h1>
+        <S_h1> {`Cadastro de Entregadores`} </S_h1>
 
         <S_form>
-          <S_h2 ga="tit1"> {`Dados pessoais do representante do restaurante`} </S_h2>
+          <S_h2 ga="tit1"> {`Dados do entregador`} </S_h2>
           <Inpt_01
             onChange={hdl_nome}
             value={nome}
@@ -326,7 +356,7 @@ const Rcad = () => {
 
           <S_div_01 ga="g"> espaço para upload documentos </S_div_01>
 
-          <S_h3 ga="sub1"> {`Endereço do representante`} </S_h3>
+          <S_h3 ga="sub1"> {`Endereço do entregador`} </S_h3>
           <Inpt_01
             onChange={hdl_rua}
             value={rua}
@@ -390,112 +420,80 @@ const Rcad = () => {
             ga="n"
           />
           <S_hr_01 ga="hr1" />
-
-          <S_h2 ga="tit2"> {`Dados da empresa`} </S_h2>
-
-          <Inpt_01
-            onChange={hdl_nome_r}
-            value={nomeR}
-            name={'field_nome_r'}
-            placeholder={`Digite o nome do restaurante`}
-            textLabel={`Nome do restaurante`}
-            ga="o"
-          />
-          
-          <Inpt_01
-            onChange={hdl_r_social}
-            value={rSocial}
-            name={'field_r_social'}
-            placeholder={`Digite a razão social`}
-            textLabel={`Razão Social`}
-            ga="p"
-          />
-          
-          <Inpt_01
-            onChange={hdl_cnpj}
-            value={cnpj}
-            name={'field_cnpj'}
-            placeholder={`Digite o CNPJ`}
-            textLabel={`CNPJ`}
-            ga="q"
-          />
           
           <Inpt_01
             onChange={hdl_tel_02}
             value={tel_02}
             name={'field_tel_02'}
             placeholder={`Digite o telefone para contato`}
-            textLabel={`Telefone Empresa`}
+            textLabel={`Telefone emergência`}
+            ga="o" type="number"
+          />
+
+          
+          <S_h3 ga="sub2"> {`Selecione se quer trabalhar pra GetLogClub ou se trabalha para algum restaurante cadastrado!`} </S_h3>
+
+          <S_div_02 ga="p">
+            <S_div_03 on={onG ? 'y' : 'n'} onClick={hdl_choice_G}>
+              <S_div_05 on={onG ? 'y' : 'n'} />
+              <S_img_01  on={onG ? 'y' : 'n'} src="/raposa.svg" />
+            </S_div_03>
+            <S_div_04 on={onR ? 'y' : 'n'} onClick={hdl_choice_R}>
+              <S_div_05 on={onR ? 'y' : 'n'} />
+              <Inpt_01
+                onChange={hdl_restaurante}
+                value={restaurante}
+                name={'field_restaurante'}
+                placeholder={`Restaurante`}
+                textLabel={`Restaurante`}
+                disable={onR ? false : true}
+                ml={true}
+              />
+            </S_div_04>
+          </S_div_02>
+
+          <S_hr_01 ga="hr2" />
+
+          <S_h2 ga="tit2"> {`Dados do veículo`} </S_h2>
+          
+          <Inpt_01
+            onChange={hdl_ano}
+            value={ano}
+            name={'field_ano'}
+            placeholder={`Ano`}
+            textLabel={`Ano`}
+            ga="q" type="number" min="1900" max="2099" step="1"
+          />
+          
+          <Inpt_01
+            onChange={hdl_modelo}
+            value={modelo}
+            name={'field_modelo'}
+            placeholder={`Modelo`}
+            textLabel={`Modelo`}
             ga="r"
           />
           
-          <S_h3 ga="sub2"> {`Endereço do restaurante`} </S_h3>
-
           <Inpt_01
-            onChange={hdl_rua_r}
-            value={ruaR}
-            name={'field_rua_r'}
-            placeholder={`digite o nome da rua`}
-            textLabel={`Rua / Logradouro`}
+            onChange={hdl_placa}
+            value={placa}
+            name={'field_placa'}
+            placeholder={`Placa`}
+            textLabel={`Placa`}
             ga="s"
           />
-
+          
           <Inpt_01
-            onChange={hdl_numero_r}
-            value={numeroR}
-            name={'field_numero_r'}
-            placeholder={`Número da casa`}
-            textLabel={`Número`}
+            onChange={hdl_cor}
+            value={cor}
+            name={'field_cor'}
+            placeholder={`Cor`}
+            textLabel={`Cor`}
             ga="t"
           />
 
-          <Inpt_01
-            onChange={hdl_obs_r}
-            value={obsR}
-            name={'field_obs_r'}
-            placeholder={`Observações`}
-            textLabel={`Observações`}
-            ga="u"
-          />
 
-          <Inpt_01
-            onChange={hdl_bairro_r}
-            value={bairroR}
-            name={'field_bairro_r'}
-            placeholder={`Bairro`}
-            textLabel={`Bairro`}
-            ga="v"
-          />
-
-          <Inpt_01
-            onChange={hdl_cidade_r}
-            value={cidadeR}
-            name={'field_cidade_r'}
-            placeholder={`Cidade`}
-            textLabel={`Cidade`}
-            ga="w"
-          />
-
-          <Inpt_01
-            onChange={hdl_estado_r}
-            value={estadoR}
-            name={'field_estado_r'}
-            placeholder={`Estado`}
-            textLabel={`Estado`}
-            ga="x"
-          />
-
-          <Inpt_01
-            onChange={hdl_cep_r}
-            value={cepR}
-            name={'field_cep_r'}
-            placeholder={`CEP`}
-            textLabel={`CEP`}
-            ga="y"
-          />
-          <S_hr_01 ga="hr2" />
-
-          <S_btn_01 ga="z"> {`Cadastre`} </S_btn_01>
+          <S_btn_01 ga="u"> {`Cadastre`} </S_btn_01>
         </S_form>
 
       </S_section_01>
@@ -505,4 +503,4 @@ const Rcad = () => {
 
 }
 
-export default Rcad;
+export default Ecad;
