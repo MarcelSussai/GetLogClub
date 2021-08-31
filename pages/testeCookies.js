@@ -56,10 +56,17 @@ const TesteCookies = () => {
   }
 
   // useEffect(() => {
+  //   const id = setInterval(() => {
+  //     hdlV02()
+  //   }, 2000)
+  //   return () => clearInterval(id)
   // }, [])
-  // const socket = io('http://localhost:3001/')
-  const socket = io('http://app.getlogclub.com.br/')
-  socket.on('connect', () => console.log('[IO] - conectado => nova conexão com sucesso! - ', socket.id))
+  
+  useEffect(() => {
+    const socket = io('http://app.getlogclub.com.br/')
+    // const socket = io('http://localhost:3001/')
+    socket.on('connect', () => console.log('[IO] - conectado => nova conexão com sucesso! - ', socket.id))
+  }, [])
 
 
 
