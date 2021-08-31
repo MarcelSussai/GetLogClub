@@ -4,10 +4,12 @@ import { io } from 'socket.io-client';
 import { axiosSimp } from '../components/services/axios';
 import { v4 } from 'uuid'
 
-const dev = false
+const dev = true
 const urlSocket =  dev ? 'http://localhost:3001/' : 'http://app.getlogclub.com.br/'
 const myID = v4()
-const socket = io(urlSocket, {transports: ['polling', 'websocket']})
+const socket = io(urlSocket, {
+  transports: ["websocket", "polling"],
+})
 
 const sty01 = {
   display: 'flex',
@@ -74,16 +76,19 @@ const TesteCookies = () => {
   
   useEffect(() => {
     const hdlTesteSocket = dado => {
-      setCoo([...coo, dado])
-      console.log(dado);
+      setCoo([dado])
     }
-    socket.onAny('teste.one', hdlTesteSocket)
-    return socket.offAny('teste.one', hdlTesteSocket)
+    socket.on('teste.one', hdlTesteSocket)
+    console.log(socket);
+    socket.on("teste.one", (data) => {
+      console.log(data);
+    })
+    return socket.off('teste.one', hdlTesteSocket)
   }, [coo])
   
   const hdlV03 = () => {
     setVez(vez + 1)
-    socket.emit('teste.one', { id: myID, message: 'teste', vez: vez, coo: coo })
+    socket.emit('teste.one', { id: myID, message: 'teste'})
   }
 
   return (
@@ -102,6 +107,8 @@ const TesteCookies = () => {
         <button> btn04 </button>
       </div>
       {coo}
+      <br />
+      {vez}
     </div>
   </>
 );
