@@ -1,6 +1,6 @@
 import { parseCookies, setCookie, destroyCookie } from 'nookies'
 import { useEffect, useState } from 'react';
-// import { io } from 'socket.io-client';
+import { io } from 'socket.io-client';
 import { axiosSimp } from '../components/services/axios';
 
 
@@ -28,7 +28,9 @@ const TesteCookies = () => {
 
   useEffect(() => {
     const cookies = parseCookies()
+    console.log('[COOKIES]');
     console.log(cookies);
+    console.log('[_______]');
     cookies.v01 ? setV01(cookies.v01) : ''
   }, [])
 
@@ -43,12 +45,22 @@ const TesteCookies = () => {
     const result = await axiosSimp({
       method: 'get',
       url: '/users',
+      headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Headers": "Authorization", 
+          "Access-Control-Allow-Methods": "GET, POST, OPTIONS, PUT, PATCH, DELETE" ,
+          "Content-Type": "application/json;charset=UTF-8"
+      }
     }).then(res => res.data)
     console.log(result);
   }
 
-  // const socket = io('http://localhost:3001', { path: '/' })
-  // socket.on('connect', () => console.log('[IO] - conectado => nova conexão com sucesso! - ', socket.id))
+  // useEffect(() => {
+  // }, [])
+  // const socket = io('http://localhost:3001/')
+  const socket = io('http://app.getlogclub.com.br/')
+  socket.on('connect', () => console.log('[IO] - conectado => nova conexão com sucesso! - ', socket.id))
+
 
 
   return (
