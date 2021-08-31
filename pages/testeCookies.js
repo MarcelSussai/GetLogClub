@@ -57,12 +57,12 @@ const TesteCookies = () => {
     const result = await axiosSimp({
       method: 'get',
       url: '/users',
-      headers: {
-          "Access-Control-Allow-Origin": "*",
-          "Access-Control-Allow-Headers": "Authorization", 
-          "Access-Control-Allow-Methods": "GET, POST, OPTIONS, PUT, PATCH, DELETE" ,
-          "Content-Type": "application/json;charset=UTF-8"
-      }
+      // headers: {
+      //     "Access-Control-Allow-Origin": "*",
+      //     "Access-Control-Allow-Headers": "Authorization", 
+      //     "Access-Control-Allow-Methods": "GET, POST, OPTIONS, PUT, PATCH, DELETE" ,
+      //     "Content-Type": "application/json;charset=UTF-8"
+      // }
     }).then(res => res.data)
     console.log(result);
   }
