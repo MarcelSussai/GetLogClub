@@ -8,7 +8,7 @@ const dev = false
 const urlSocket =  dev ? 'http://localhost:3001/' : 'http://app.getlogclub.com.br/'
 const myID = v4()
 const socket = io(urlSocket, {
-  transports: ["websocket", "polling"],
+  transports: ["polling", "websocket"],
 })
 
 const sty01 = {
