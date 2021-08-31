@@ -2,8 +2,12 @@ import { parseCookies, setCookie, destroyCookie } from 'nookies'
 import { useEffect, useState } from 'react';
 import { io } from 'socket.io-client';
 import { axiosSimp } from '../components/services/axios';
+import { v4 } from 'uuid'
 
-
+const dev = false
+const urlSocket =  dev ? 'http://localhost:3001/' : 'http://app.getlogclub.com.br/'
+const myID = v4()
+const socket = io(urlSocket, {transports: ['polling', 'websocket']})
 
 const sty01 = {
   display: 'flex',
@@ -18,15 +22,21 @@ const sty02 = {
   alignItems: 'center',
 }
 
+
 const TesteCookies = () => {
+
+  
+
   const [v01, setV01] = useState('')
   const [v02, setV02] = useState({})
   const [v03, setV03] = useState('')
   const [v04, setV04] = useState('')
 
-  const [coo, setCoo] = useState({})
+  const [coo, setCoo] = useState([])
+  const [vez, setVez] = useState(0)
 
   useEffect(() => {
+    socket.on('connect', () => console.log('[IO] - conectado => nova conexão com sucesso! - ', socket.id))
     const cookies = parseCookies()
     console.log('[COOKIES]');
     console.log(cookies);
@@ -63,12 +73,18 @@ const TesteCookies = () => {
   // }, [])
   
   useEffect(() => {
-    const socket = io('http://app.getlogclub.com.br/')
-    // const socket = io('http://localhost:3001/')
-    socket.on('connect', () => console.log('[IO] - conectado => nova conexão com sucesso! - ', socket.id))
-  }, [])
-
-
+    const hdlTesteSocket = dado => {
+      setCoo([...coo, dado])
+      console.log(dado);
+    }
+    socket.onAny('teste.one', hdlTesteSocket)
+    return socket.offAny('teste.one', hdlTesteSocket)
+  }, [coo])
+  
+  const hdlV03 = () => {
+    setVez(vez + 1)
+    socket.emit('teste.one', { id: myID, message: 'teste', vez: vez, coo: coo })
+  }
 
   return (
   <>
@@ -82,9 +98,10 @@ const TesteCookies = () => {
       <div styles={sty02}>
         <button onClick={hdlV01}> btn01 </button>
         <button onClick={hdlV02}> btn02 </button>
-        <button> btn03 </button>
+        <button onClick={hdlV03}> btn03 </button>
         <button> btn04 </button>
       </div>
+      {coo}
     </div>
   </>
 );
