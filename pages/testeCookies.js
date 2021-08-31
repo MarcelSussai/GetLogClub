@@ -4,7 +4,7 @@ import { io } from 'socket.io-client';
 import { axiosSimp } from '../components/services/axios';
 import { v4 } from 'uuid'
 
-const dev = true
+const dev = false
 const urlSocket =  dev ? 'http://localhost:3001/' : 'http://app.getlogclub.com.br/'
 const myID = v4()
 const socket = io(urlSocket, {
