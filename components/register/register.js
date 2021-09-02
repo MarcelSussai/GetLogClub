@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { cusMQ, cusTR, fontF, Input_01, S_main_base } from "../../config/theme";
 import { useRouter } from 'next/router'
+import Cookies from 'js-cookie';
 
 
 const S_main = styled(S_main_base)`
@@ -119,9 +120,15 @@ const Register = () => {
   const hdl_entregador = () => setSelecionado('e')
   const hdl_restaurante = () => setSelecionado('r')
 
-  const hdl_inpt_email = (e) => console.log(e.target.value);
-  const hdl_inpt_senha = (e) => console.log(e.target.value);
-  const hdl_inpt_confirmarSenha = (e) => console.log(e.target.value);
+  const [email, setEmail]   = useState('')
+  const [pass, setPass]     = useState('')
+  const [cPass, setCPass]   = useState('')
+
+  const [passValid, setPassValid] = useState(true)
+
+  const hdl_inpt_email            = (e) => setEmail(e.target.value);
+  const hdl_inpt_senha            = (e) => setPass(e.target.value);
+  const hdl_inpt_confirmarSenha   = (e) => setCPass(e.target.value);
   
 
   useEffect(() => {
@@ -131,8 +138,13 @@ const Register = () => {
 
   const hdl_click_01 = (e) => {
     e.preventDefault()
+    Cookies.set('email', email)
+    if(pass === cPass && passValid) {
+      Cookies.set('pass', pass)
+    }
     if(selecionado === 'r') {
       router.push('/cadastroR')
+      
     }
     if(selecionado === 'e') {
       router.push('/cadastroE')

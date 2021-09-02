@@ -1,8 +1,10 @@
-import { parseCookies, setCookie, destroyCookie } from 'nookies'
+
 import { useEffect, useState } from 'react';
 import { io } from 'socket.io-client';
 import { axiosSimp } from '../components/services/axios';
 import { v4 } from 'uuid'
+
+
 
 const dev = false
 const urlSocket =  dev ? 'http://localhost:3001/' : 'http://app.getlogclub.com.br/'
@@ -15,6 +17,7 @@ const sty01 = {
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
+  width: '100%',
 }
 
 const sty02 = {
@@ -39,18 +42,10 @@ const TesteCookies = () => {
 
   useEffect(() => {
     socket.on('connect', () => console.log('[IO] - conectado => nova conexão com sucesso! - ', socket.id))
-    const cookies = parseCookies()
-    console.log('[COOKIES]');
-    console.log(cookies);
-    console.log('[_______]');
-    cookies.v01 ? setV01(cookies.v01) : ''
   }, [])
 
   const hdlV01 = () => {
-    setCookie(null, 'v01', 'teste02', {
-      maxAge: 30 * 24 * 60 * 60,
-      path: '/testeCookies',
-    })
+    
   }
 
   const hdlV02 = async () => {
@@ -66,39 +61,33 @@ const TesteCookies = () => {
     }).then(res => res.data)
     console.log(result);
   }
-
-  // useEffect(() => {
-  //   const id = setInterval(() => {
-  //     hdlV02()
-  //   }, 2000)
-  //   return () => clearInterval(id)
-  // }, [])
   
   useEffect(() => {
-    const hdlTesteSocket = dado => {
-      setCoo([dado])
+
+    const hdlListenTeste = (data) => {
+      setCoo([...coo, data])
+      console.log(coo);
     }
-    socket.on('teste.one', hdlTesteSocket)
+
     console.log(socket);
-    socket.on("teste.one", (data) => {
-      console.log(data);
-    })
-    return socket.off('teste.one', hdlTesteSocket)
+    socket.on("teste.one", hdlListenTeste)
+    // return socket.off('teste.one', hdlListenTeste)
+    // return socket.off('teste.one', hdlTesteSocket)
   }, [coo])
   
   const hdlV03 = () => {
     setVez(vez + 1)
-    socket.emit('teste.one', { id: myID, message: 'teste'})
+    socket.emit('teste.one', { id: myID, message: 'teste', vez: vez, socketId: socket.id})
   }
 
   return (
   <>
     <div styles={sty01}>
       <div styles={sty02}>
-        <p>{`Valor 01: ${v01}`}</p>
-        <p>{`Valor 01: ${v02}`}</p>
-        <p>{`Valor 01: ${v03}`}</p>
-        <p>{`Valor 01: ${v04}`}</p>
+        <p styles={{textAlign: 'center', width: '100%'}}>{`Valor 01: ${v01}`}</p>
+        <p styles={{textAlign: 'center', width: '100%'}}>{`Valor 01: ${v02}`}</p>
+        <p styles={{textAlign: 'center', width: '100%'}}>{`Valor 01: ${v03}`}</p>
+        <p styles={{textAlign: 'center', width: '100%'}}>{`Valor 01: ${v04}`}</p>
       </div>
       <div styles={sty02}>
         <button onClick={hdlV01}> btn01 </button>
@@ -106,7 +95,16 @@ const TesteCookies = () => {
         <button onClick={hdlV03}> btn03 </button>
         <button> btn04 </button>
       </div>
-      {coo}
+
+      {
+        coo.map((v, i) => {
+          return (
+            <h3 key={i} style={{textAlign: myID === v ? 'right' : '',}}>
+              {`Valor ${i} - ${v}`}
+            </h3>
+          )
+        })
+      }
       <br />
       {vez}
     </div>

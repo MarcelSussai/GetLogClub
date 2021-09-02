@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import Cookies from 'js-cookie';
+import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import {
   cusMQ, cusTR, fontF,
@@ -231,41 +232,66 @@ const S_hr_01 = styled.hr`
 const Ecad = () => {
 
   
-  const [nome, setNome] =                 useState('')
-  const [rg, setRg] =                     useState('')
-  const [cpf, setCpf] =                   useState('')
-  const [email, setEmail] =               useState('')
-  const [tel_01, setTel_01] =             useState('')
-  const [data_nasc, setData_nasc] =       useState('')
-  
-  const [rua, setRua] =                   useState('')
-  const [numero, setNumero] =             useState('')
-  const [obs, setObs] =                   useState('')
-  const [bairro, setBairro] =             useState('')
-  const [cidade, setCidade] =             useState('')
-  const [estado, setEstado] =             useState('')
-  const [cep, setCep] =                   useState('')
-  
-  const [tel_02, setTel_02] =             useState('')
-  const [restaurante, setRestaurante] =   useState('')
+  const [pass, setPass]                 = useState('')
 
-  const [ano, setAno] =                   useState('')
-  const [modelo, setModelo] =             useState('')
-  const [placa, setPlaca] =               useState('')
-  const [cor, setCor] =                   useState('')
+  const [nome, setNome]                 = useState('')
+  const [rg, setRg]                     = useState('')
+  const [cpf, setCpf]                   = useState('')
+  const [email, setEmail]               = useState('')
+  const [tel_01, setTel_01]             = useState('')
+  const [data_nasc, setData_nasc]       = useState('')
+  
+  const [rua, setRua]                   = useState('')
+  const [numero, setNumero]             = useState('')
+  const [obs, setObs]                   = useState('')
+  const [bairro, setBairro]             = useState('')
+  const [cidade, setCidade]             = useState('')
+  const [estado, setEstado]             = useState('')
+  const [cep, setCep]                   = useState('')
+  
+  const [tel_02, setTel_02]             = useState('')
+  const [restaurante, setRestaurante]   = useState('')
 
-  const [onG, setOnG] =                   useState(true)
-  const [onR, setOnR] =                   useState(false)
+  const [ano, setAno]                   = useState('')
+  const [modelo, setModelo]             = useState('')
+  const [placa, setPlaca]               = useState('')
+  const [cor, setCor]                   = useState('')
+
+  const [onG, setOnG]                   = useState(true)
+  const [onR, setOnR]                   = useState(false)
+
+  const [admin, setAdmin]               = useState('')
+
   const hdl_choice_G = () => {
     setOnG(true)
     setOnR(false)
+    setAdmin('[ENTREGADOR] - [GETLOGCLUB]');
   }
   const hdl_choice_R = () => {
     setOnG(false)
     setOnR(true)
+    setAdmin('[ENTREGADOR] - [RESTAURANTE]');
+  }
+  /*
+  [ENTREGADOR] - [GETLOGCLUB] - 00000001
+  [ENTREGADOR] - [RESTAURANTE] - 00000002
+  */
+
+  useEffect(() => {
+    let vemail = Cookies.get('email')
+    let vpass = Cookies.get('pass')
+    // console.log(vemail, vpass);
+    setEmail(vemail)
+    setPass(vpass)
+  }, [])
+
+  const submitHdl = (e) => {
+    e.preventDefault()
+    let a = admin + ' - ' + restaurante
+    console.log(a)
   }
 
-
+  const hdl_restaurante     = (e) => setRestaurante(e.target.value)
   // onChange, type, value, name, placeholder, textLabel, ga
 
   // handlers de captura dos dados
@@ -283,7 +309,6 @@ const Ecad = () => {
   const hdl_estado          = (e) => setEstado(e.target.value)
   const hdl_cep             = (e) => setCep(e.target.value)
   const hdl_tel_02          = (e) => setTel_02(e.target.value)
-  const hdl_restaurante     = (e) => setRestaurante(e.target.value)
   const hdl_ano             = (e) => setAno(e.target.value)
   const hdl_modelo          = (e) => setModelo(e.target.value)
   const hdl_placa           = (e) => setPlaca(e.target.value)
@@ -493,7 +518,7 @@ const Ecad = () => {
           />
 
 
-          <S_btn_01 ga="u"> {`Cadastre`} </S_btn_01>
+          <S_btn_01 onClick={submitHdl} ga="u"> {`Cadastre`} </S_btn_01>
         </S_form>
 
       </S_section_01>

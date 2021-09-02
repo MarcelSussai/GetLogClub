@@ -19,9 +19,9 @@ const S_label = styled.label`
   font-size: 14px;
   font-weight: 700;
   padding: 4px 8px 4px 8px;
-  background: ${({theme, d}) => d === 'y' ? theme.colors.gray.c100 : theme.colors.white };
+  background: ${({theme}) => theme.colors.white };
   border-radius: 50%;
-  color: ${({theme}) => theme.colors.brown.c600 };
+  color: ${({theme, d}) => d === 'y' ? theme.colors.brown.c200 : theme.colors.brown.c600 };
 `
 const S_input = styled.input`
   ${cusTR('.2s')}
@@ -73,8 +73,12 @@ const S_input = styled.input`
   }
 
   &:disabled {
-    background: ${({theme}) => theme.colors.gray.c100 };
-    cursor: not-allowed;
+    /* background: ${({theme}) => theme.colors.gray.c100 }; */
+    border-top: solid 4px ${({theme}) => theme.colors.brown.c200 };
+    border-right: solid 1px ${({theme}) => theme.colors.brown.c200 };
+    border-bottom: solid 2px ${({theme}) => theme.colors.brown.c200 };
+    border-left: solid 1px ${({theme}) => theme.colors.brown.c200 };
+    color: ${({theme}) => theme.colors.gray.c200 };
   }
 `
 
@@ -94,6 +98,7 @@ const Inpt_01 = (props) => {
         id={name}
         placeholder={placeholder}
         disabled={disable}
+        className={disable ? 'desativado' : ''}
       />
     </S_container_div>
   </>

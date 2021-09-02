@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import Cookies from 'js-cookie';
+import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import {
   cusMQ, cusTR, fontF,
@@ -201,36 +202,46 @@ const S_hr_01 = styled.hr`
 
 const Rcad = () => {
 
+  const [pass, setPass]               = useState('')
+
   // Dados pessoais do representante
-  const [nome, setNome] =                 useState('')
-  const [rg, setRg] =                     useState('')
-  const [cpf, setCpf] =                   useState('')
-  const [email, setEmail] =               useState('')
-  const [tel_01, setTel_01] =             useState('')
-  const [data_nasc, setData_nasc] =       useState('')
+  const [nome, setNome]               = useState('')
+  const [rg, setRg]                   = useState('')
+  const [cpf, setCpf]                 = useState('')
+  const [email, setEmail]             = useState('')
+  const [tel_01, setTel_01]           = useState('')
+  const [data_nasc, setData_nasc]     = useState('')
   
-  const [rua, setRua] =                   useState('')
-  const [numero, setNumero] =             useState('')
-  const [obs, setObs] =                   useState('')
-  const [bairro, setBairro] =             useState('')
-  const [cidade, setCidade] =             useState('')
-  const [estado, setEstado] =             useState('')
-  const [cep, setCep] =                   useState('')
+  const [rua, setRua]                 = useState('')
+  const [numero, setNumero]           = useState('')
+  const [obs, setObs]                 = useState('')
+  const [bairro, setBairro]           = useState('')
+  const [cidade, setCidade]           = useState('')
+  const [estado, setEstado]           = useState('')
+  const [cep, setCep]                 = useState('')
   
   // dados do restaurante
-  const [nomeR, setNomeR] =               useState('')
-  const [rSocial, setRSocial] =           useState('')
-  const [cnpj, setCnpj] =                 useState('')
-  const [tel_02, setTel_02] =             useState('')
+  const [nomeR, setNomeR]             = useState('')
+  const [rSocial, setRSocial]         = useState('')
+  const [cnpj, setCnpj]               = useState('')
+  const [tel_02, setTel_02]           = useState('')
 
-  const [ruaR, setRuaR] =                 useState('')
-  const [numeroR, setNumeroR] =           useState('')
-  const [obsR, setObsR] =                 useState('')
-  const [bairroR, setBairroR] =           useState('')
-  const [cidadeR, setCidadeR] =           useState('')
-  const [estadoR, setEstadoR] =           useState('')
-  const [cepR, setCepR] =                 useState('')
+  const [ruaR, setRuaR]               = useState('')
+  const [numeroR, setNumeroR]         = useState('')
+  const [obsR, setObsR]               = useState('')
+  const [bairroR, setBairroR]         = useState('')
+  const [cidadeR, setCidadeR]         = useState('')
+  const [estadoR, setEstadoR]         = useState('')
+  const [cepR, setCepR]               = useState('')
 
+  
+  useEffect(() => {
+    let vemail  = Cookies.get('email')
+    let vpass   = Cookies.get('pass')
+    // console.log(vemail, vpass);
+    setEmail(vemail)
+    setPass(vpass)
+  }, [])
   // onChange, type, value, name, placeholder, textLabel, ga
 
   // handlers de captura dos dados
