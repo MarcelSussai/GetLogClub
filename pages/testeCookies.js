@@ -7,7 +7,7 @@ import { v4 } from 'uuid'
 
 
 const dev = false
-const urlSocket =  dev ? 'http://localhost:3001/' : 'http://app.getlogclub.com.br/'
+const urlSocket =  dev ? 'http://localhost:3001/' : 'https://app.getlogclub.com.br/'
 const myID = v4()
 const socket = io(urlSocket, {
   transports: ["polling", "websocket"],
