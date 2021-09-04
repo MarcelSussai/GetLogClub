@@ -5,6 +5,7 @@ import {
   cusMQ, cusTR, fontF,
   S_main_base, Input_01, Chk_01,
 } from "../../config/theme";
+import { axiosSimp } from '../services/axios';
 import Inpt_01 from './inpt_01';
 
 
@@ -262,10 +263,14 @@ const Ecad = () => {
 
   const [admin, setAdmin]               = useState('')
 
+  const [dadosCadUser, setDadosCadUser] = useState([])
+  const [dadosCadVehicle, setDadosCadVehicle] = useState({})
+
   const hdl_choice_G = () => {
     setOnG(true)
     setOnR(false)
     setAdmin('[ENTREGADOR] - [GETLOGCLUB]');
+    setRestaurante('')
   }
   const hdl_choice_R = () => {
     setOnG(false)
@@ -273,8 +278,8 @@ const Ecad = () => {
     setAdmin('[ENTREGADOR] - [RESTAURANTE]');
   }
   /*
-  [ENTREGADOR] - [GETLOGCLUB] - 00000001
-  [ENTREGADOR] - [RESTAURANTE] - 00000002
+  [ENTREGADOR] - [GETLOGCLUB]
+  [ENTREGADOR] - [RESTAURANTE]
   */
 
   useEffect(() => {
@@ -285,11 +290,73 @@ const Ecad = () => {
     setPass(vpass)
   }, [])
 
-  const submitHdl = (e) => {
+  const submitHdl = async (e) => {
     e.preventDefault()
-    let a = admin + ' - ' + restaurante
-    console.log(a)
+    if(onR) {
+      setAdmin(admin + ' - ' + restaurante)
+    }
+    console.log('bateu aqui');
+    await axiosSimp({
+      method: 'post',
+      url: '/addUser',
+      headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Headers": "Authorization", 
+          "Access-Control-Allow-Methods": "GET, POST, OPTIONS, PUT, PATCH, DELETE" ,
+          "Content-Type": "application/json;charset=UTF-8"
+      },
+      data: {
+        name: nome,
+        email: email,
+        pass: pass,
+        rg: rg,
+        cpf: cpf,
+        tel1: tel_01,
+        tel2: tel_02,
+        nasc: data_nasc,
+        admin: admin,
+        rua: rua,
+        numero: numero,
+        obs: obs || "",
+        bairro: bairro,
+        cidade: cidade,
+        estado: estado,
+        cep: cep
+      }
+    }).then(res => res.data).then(r => setDadosCadUser(r)).then( async () => {
+      
+      console.log('bateu aqui 2');
+      
+      if (dadosCadUser.idUser) {
+        // console.log(dadosCadUser.idUser)
+        await axiosSimp({
+          method: 'post',
+          url: '/addVehicle',
+          headers: {
+              "Access-Control-Allow-Origin": "*",
+              "Access-Control-Allow-Headers": "Authorization", 
+              "Access-Control-Allow-Methods": "GET, POST, OPTIONS, PUT, PATCH, DELETE" ,
+              "Content-Type": "application/json;charset=UTF-8"
+          },
+          data: {
+            ano: ano,
+            modelo: modelo,
+            placa: placa,
+            cor: cor,
+            UserIdUser: dadosCadUser.idUser
+          }
+        }).then(res => res.data).then(r => setDadosCadVehicle(r))
+      } else {
+        console.log('[ERROR] - ', dadosCadUser[0]);
+      }
+      console.log(dadosCadVehicle);
+    })
+
   }
+
+  useEffect(() => {
+    console.log(admin)
+  }, [admin])
 
   const hdl_restaurante     = (e) => setRestaurante(e.target.value)
   // onChange, type, value, name, placeholder, textLabel, ga
@@ -309,6 +376,7 @@ const Ecad = () => {
   const hdl_estado          = (e) => setEstado(e.target.value)
   const hdl_cep             = (e) => setCep(e.target.value)
   const hdl_tel_02          = (e) => setTel_02(e.target.value)
+
   const hdl_ano             = (e) => setAno(e.target.value)
   const hdl_modelo          = (e) => setModelo(e.target.value)
   const hdl_placa           = (e) => setPlaca(e.target.value)
@@ -444,8 +512,9 @@ const Ecad = () => {
             textLabel={`CEP`}
             ga="n"
           />
+
           <S_hr_01 ga="hr1" />
-          
+
           <Inpt_01
             onChange={hdl_tel_02}
             value={tel_02}
@@ -455,7 +524,6 @@ const Ecad = () => {
             ga="o" type="number"
           />
 
-          
           <S_h3 ga="sub2"> {`Selecione se quer trabalhar pra GetLogClub ou se trabalha para algum restaurante cadastrado!`} </S_h3>
 
           <S_div_02 ga="p">
@@ -480,7 +548,7 @@ const Ecad = () => {
           <S_hr_01 ga="hr2" />
 
           <S_h2 ga="tit2"> {`Dados do veículo`} </S_h2>
-          
+
           <Inpt_01
             onChange={hdl_ano}
             value={ano}
@@ -489,7 +557,7 @@ const Ecad = () => {
             textLabel={`Ano`}
             ga="q" type="number" min="1900" max="2099" step="1"
           />
-          
+
           <Inpt_01
             onChange={hdl_modelo}
             value={modelo}
@@ -498,7 +566,7 @@ const Ecad = () => {
             textLabel={`Modelo`}
             ga="r"
           />
-          
+
           <Inpt_01
             onChange={hdl_placa}
             value={placa}
@@ -507,7 +575,7 @@ const Ecad = () => {
             textLabel={`Placa`}
             ga="s"
           />
-          
+
           <Inpt_01
             onChange={hdl_cor}
             value={cor}

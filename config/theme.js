@@ -145,22 +145,22 @@ const S_label = styled.label`
   padding: 4px 8px 4px 8px;
   background: ${ theme.colors.white };
   border-radius: 50%;
-  color: ${ theme.colors.blue.c600 };
+  color: ${ ({valid}) => valid ? theme.colors.blue.c600 : theme.colors.red.c600 };
 `
 const S_input = styled.input`
   ${cusTR('.2s')}
   padding: 12px 16px 4px 16px;
   width: 100%;
   font-weight: 500;
-  border-top: solid 4px ${ theme.colors.blue.c600 };
-  border-right: solid 1px ${ theme.colors.blue.c600 };
-  border-bottom: solid 2px ${ theme.colors.blue.c600 };
-  border-left: solid 1px ${ theme.colors.blue.c600 };
+  border-top: solid 4px ${({valid}) => valid ? theme.colors.blue.c600 : theme.colors.red.c600 };
+  border-right: solid 1px ${({valid}) => valid ? theme.colors.blue.c600 : theme.colors.red.c600 };
+  border-bottom: solid 2px ${({valid}) => valid ? theme.colors.blue.c600 : theme.colors.red.c600 };
+  border-left: solid 1px ${({valid}) => valid ? theme.colors.blue.c600 : theme.colors.red.c600 };
   background: ${ theme.colors.white };
   border-top-left-radius: 8px;
   /* border-top-right-radius: 8px; */
   border-bottom-right-radius: 8px;
-  color: ${ theme.colors.gray.c800 };
+  color: ${ ({valid}) => valid ? theme.colors.gray.c800 : theme.colors.red.c400 };
   
   &::placeholder {
     color: ${ theme.colors.gray.c400 };
@@ -176,13 +176,15 @@ const S_input = styled.input`
 
 export const Input_01 = (props) => {
 
-  const { txtLabel, txtPh, oc, name, type } = props
+  const { txtLabel, txtPh, oc, name, type, valid, focus } = props
+
+  const fnTrash = (e) => e.preventDefault()
 
   return (
     <>
       <S_container_input>
-        <S_label HTMLFor={name}> {txtLabel || 'texto'} </S_label>
-        <S_input autoComplete={type === 'password' ? 'current-password' : ''} onChange={oc} name={name} id={name} type={type || 'text'} placeholder={txtPh} />
+        <S_label valid={valid} HTMLFor={name}> {txtLabel || 'texto'} </S_label>
+        <S_input onFocus={focus || fnTrash} valid={valid} autoComplete={type === 'password' ? 'current-password' : ''} onChange={oc} name={name} id={name} type={type || 'text'} placeholder={txtPh} />
       </S_container_input>
     </>
   )

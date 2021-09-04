@@ -6,12 +6,18 @@ import { v4 } from 'uuid'
 
 
 
-const dev = false
+const dev = true
 const urlSocket =  dev ? 'http://localhost:3001/' : 'https://app.getlogclub.com.br/'
 const myID = v4()
-const socket = io(urlSocket, {
-  transports: ["polling", "websocket"],
-})
+const socket = io(urlSocket, 
+  {
+    cors: {
+      origin: "*",
+      methods: ["GET", "POST"]
+    },
+    transports: ["websocket", "polling"],
+  }
+)
 
 const sty01 = {
   display: 'flex',
@@ -31,17 +37,21 @@ const sty02 = {
 const TesteCookies = () => {
 
   
+  // const val = []
 
   const [v01, setV01] = useState('')
   const [v02, setV02] = useState({})
   const [v03, setV03] = useState('')
   const [v04, setV04] = useState('')
 
-  const [coo, setCoo] = useState([])
   const [vez, setVez] = useState(0)
 
+  const [coo, setCoo] = useState([])
+
   useEffect(() => {
-    socket.on('connect', () => console.log('[IO] - conectado => nova conexão com sucesso! - ', socket.id))
+    const fnConnect = () => console.log('[IO] - conectado => nova conexão com sucesso! - ', socket.id)
+    socket.on('connect', fnConnect)
+    return socket.on('disconnect', fnConnect)
   }, [])
 
   const hdlV01 = () => {
@@ -63,21 +73,22 @@ const TesteCookies = () => {
   }
   
   useEffect(() => {
-
-    const hdlListenTeste = (data) => {
-      setCoo([...coo, data])
-      console.log(coo);
-    }
-
-    console.log(socket);
-    socket.on("teste.one", hdlListenTeste)
-    // return socket.off('teste.one', hdlListenTeste)
-    // return socket.off('teste.one', hdlTesteSocket)
-  }, [coo])
+  console.log(socket);
+  const hdlListenTeste = (dados) => { setCoo(coo => [...coo, dados]) }
+  socket.on("receiveM", hdlListenTeste)
+  }, [])
   
+  useEffect(() => { console.log(coo) }, [coo])
+
   const hdlV03 = () => {
     setVez(vez + 1)
-    socket.emit('teste.one', { id: myID, message: 'teste', vez: vez, socketId: socket.id})
+    let obj = {
+      socket: `[AUTOR] - id => ${socket.id}`,
+      autor: myID,
+      mensagem: `[MENSAGEM] - ${vez}`,
+    }
+    setCoo(coo => [...coo, obj])
+    socket.emit('sendM', obj)
   }
 
   return (
@@ -99,14 +110,12 @@ const TesteCookies = () => {
       {
         coo.map((v, i) => {
           return (
-            <h3 key={i} style={{textAlign: myID === v ? 'right' : '',}}>
-              {`Valor ${i} - ${v}`}
+            <h3 key={i} style={{textAlign: myID === v.autor ? 'right' : '',}}>
+              {`Valor ${i} - ${v.mensagem}`}
             </h3>
           )
         })
       }
-      <br />
-      {vez}
     </div>
   </>
 );
