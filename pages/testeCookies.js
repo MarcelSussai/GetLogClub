@@ -15,7 +15,7 @@ const socket = io(urlSocket,
       origin: "*",
       methods: ["GET", "POST"]
     },
-    transports: ["websocket", "polling"],
+    transports: ["polling", "websocket"],
   }
 )
 
