@@ -261,10 +261,10 @@ const Ecad = () => {
   const [onG, setOnG]                   = useState(true)
   const [onR, setOnR]                   = useState(false)
 
-  const [admin, setAdmin]               = useState('')
+  const [admin, setAdmin]               = useState('[ENTREGADOR] - [GETLOGCLUB]')
 
-  const [dadosCadUser, setDadosCadUser] = useState([])
-  const [dadosCadVehicle, setDadosCadVehicle] = useState({})
+  const [dadosCadUser, setDadosCadUser] = useState()
+  const [dadosCadVehicle, setDadosCadVehicle] = useState()
 
   const hdl_choice_G = () => {
     setOnG(true)
@@ -292,10 +292,16 @@ const Ecad = () => {
 
   const submitHdl = async (e) => {
     e.preventDefault()
+
+    console.log('[LOG] - COMEÇO SUBMIT HANDLE - valor do admin:', admin);
+    
     if(onR) {
-      setAdmin(admin + ' - ' + restaurante)
+      if(admin === '[ENTREGADOR] - [RESTAURANTE]') {
+        setAdmin(admin + ' - ' + restaurante)
+      }
+      console.log('[LOG] - SELECIONOU OUTRO RESTAURANTE - valor do admin:', admin);
     }
-    console.log('bateu aqui');
+
     await axiosSimp({
       method: 'post',
       url: '/addUser',
@@ -323,12 +329,14 @@ const Ecad = () => {
         estado: estado,
         cep: cep
       }
-    }).then(res => res.data).then(r => setDadosCadUser(r)).then( async () => {
+    }).then(res => res.data).then(async (r) => {
+      setDadosCadUser(r)
       
-      console.log('bateu aqui 2');
+      if (r.hasOwnProperty('error')) { return console.log('[ERROR] -', r.error) }
+      console.log('[LOG] - FEITO O POST PARA USER - valor do idUser:', {...dadosCadUser});
+
       
-      if (dadosCadUser.idUser) {
-        // console.log(dadosCadUser.idUser)
+      if (r.hasOwnProperty('idUser')) {
         await axiosSimp({
           method: 'post',
           url: '/addVehicle',
@@ -343,20 +351,34 @@ const Ecad = () => {
             modelo: modelo,
             placa: placa,
             cor: cor,
-            UserIdUser: dadosCadUser.idUser
+            UserIdUser: r.idUser
           }
-        }).then(res => res.data).then(r => setDadosCadVehicle(r))
-      } else {
-        console.log('[ERROR] - ', dadosCadUser[0]);
-      }
-      console.log(dadosCadVehicle);
-    })
+        }).then(res2 => res2.data).then((r2) => {
+          setDadosCadVehicle(r2)
+          // console.log(r2)
+          if ( r2.hasOwnProperty('error')) { return console.log('[ERROR] -', r2.error) } else {
+            // CRIAÇÃO DOS COOKIES COM AS INFORMAÇÕES QUE SERÃO USADAS PARA O PAINEL ENTREGADOR
+            // AQUI VAI A CHAMADA PARA OUTRA PÁGINA
+            console.log('[SUCESSO] - ROTEANDO PARA A OUTRA PÁGINA!')
+          }
 
+        }
+      )}
+    })
   }
 
   useEffect(() => {
+    console.log('________________________________________________________________');
     console.log(admin)
-  }, [admin])
+    console.log('‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾');
+    if(dadosCadUser) {
+      if(dadosCadUser.hasOwnProperty('error')) { console.log('ERRO USUÁRIO JÁ EXISTE') }
+    }
+    console.log('________________________________________________________________');
+    console.log(dadosCadVehicle);
+    console.log(dadosCadUser);
+    console.log('‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾');
+  }, [admin, dadosCadVehicle, dadosCadUser])
 
   const hdl_restaurante     = (e) => setRestaurante(e.target.value)
   // onChange, type, value, name, placeholder, textLabel, ga
