@@ -97,10 +97,44 @@ const S_btn_01 = styled.button`
 
   }
 `
+const S_inpt_upload = styled.input`
+  display: none;
+`
+const S_label_upload = styled.label`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 6px;
+  border-radius: 8px;
+  background: ${ ({theme}) => theme.colors.aqua.c600 };
+  gap: 8px;
+  cursor: pointer;
+  color: ${ ({theme}) => theme.colors.green.p300 };
+  margin-top: 2px;
+  font-weight: 600;
+  font-size: 14px;
+  ${cusTR('.2s')}
+  
+  &:hover {
+    background: ${ ({theme}) => theme.colors.aqua.c700 };
+  }
+`
+const S_txt_label = styled.p`
+  line-height: 1;
+  color: ${ ({theme}) => theme.colors.brown.c600 };
+  top: -8px;
+  font-weight: 600;
+  padding: 2px 8px 2px 8px;
+`
 
 const S_div_01 = styled.div`
   grid-area: ${({ga}) => ga};
   font-size: 12px;
+  transform: translateY(-8px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 `
 const S_div_02 = styled.div`
   grid-area: ${ ({ga}) => ga };
@@ -145,6 +179,24 @@ const S_div_05 = styled.div`
   /* border: solid 1px ${ ({theme, on}) => on === 'y' ? theme.colors.brown.c600 : theme.colors.gray.c300 }; */
   margin-bottom: 16px;
   ${cusTR('.2s')}
+`
+const S_div_06 = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  padding: 16px;
+  width: 100%;
+`
+const S_div_07 = styled.div`
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 100%;
+  /* justify-content: center; */
+  align-items: center;
+  gap: 8px;
 `
 
 const S_h1 = styled.h1`
@@ -215,6 +267,30 @@ const S_h3 = styled.h3`
     font-size: 22px;
   }
 `
+const S_p_01 = styled.p`
+  font-size: 14px;
+  color: ${ ({theme}) => theme.colors.brown.c700 };
+  font-weight: 500;
+`
+const S_p_02 = styled.p`
+  font-size: 12px;
+  color: ${ ({theme, on}) => on === 'y' ? theme.colors.red.c600 : theme.colors.white };
+  font-weight: 500;
+  /* position: ${ ({on}) => on === 'y' ? 'relative' : 'absolute' }; */
+  padding: 8px 16px;
+  /* width: 100%; */
+  text-align: center;
+  border-bottom-right-radius: 8px;
+  border-top-right-radius: 8px;
+  border-left:  ${ ({theme, on}) => on === 'y' ? 'solid 4px' + theme.colors.red.p500 : 'none' };
+  border-bottom:  ${ ({theme, on}) => on === 'y' ? 'solid 1px' + theme.colors.red.c200 : 'none' };
+  border-top:  ${ ({theme, on}) => on === 'y' ? 'solid 1px' + theme.colors.red.c200 : 'none' };
+  background: ${ ({theme, on}) => on === 'y' ? theme.colors.red.c100 : theme.colors.white };
+  height: ${ ({on}) => on === 'y' ? 'fit-content' : '0px' };
+  opacity: ${ ({on}) => on === 'y' ? '1' : '0' };
+  ${cusTR('.2s')}
+`
+
 const S_img_01 = styled.img`
   width: 48%;
   opacity: ${ ({on}) => on === 'y' ? '1' : '.4'};
@@ -411,6 +487,25 @@ const Ecad = () => {
 
         <S_h1> {`Cadastro de Entregadores`} </S_h1>
 
+        <S_div_06>
+
+          <S_p_01> {`Por favor informe seus dados, para cadastro em nossa plataforma, e com isso poder contratar e usar nossos serviços`} </S_p_01>
+          
+          <S_div_07>
+            <S_p_02 on={true ? 'y' : 'n'}> {`Seu nome completo!`} </S_p_02>
+            <S_p_02 on={true ? 'y' : 'n'}> {`Um RG Válido`} </S_p_02>
+            <S_p_02 on={true ? 'y' : 'n'}> {`Um CPF Válido`} </S_p_02>
+            <S_p_02 on={true ? 'y' : 'n'}> {`Seu email (informado anteriormente) `} </S_p_02>
+            <S_p_02 on={true ? 'y' : 'n'}> {`Um Telefone para contato`} </S_p_02>
+            <S_p_02 on={true ? 'y' : 'n'}> {`Um Telefone para emergências`} </S_p_02>
+            <S_p_02 on={true ? 'y' : 'n'}> {`Fotos dos documentos`} </S_p_02>
+            <S_p_02 on={true ? 'y' : 'n'}> {`Endereço correto`} </S_p_02>
+            <S_p_02 on={true ? 'y' : 'n'}> {`Dados do veículo`} </S_p_02>
+            
+          </S_div_07>
+
+        </S_div_06>
+
         <S_form>
           <S_h2 ga="tit1"> {`Dados do entregador`} </S_h2>
           <Inpt_01
@@ -418,7 +513,7 @@ const Ecad = () => {
             value={nome}
             name={'field_nome'}
             placeholder={`Digite seu nome completo`}
-            textLabel={`Nome`}
+            textLabel={`Nome Completo`}
             ga="a"
           />
 
@@ -469,7 +564,15 @@ const Ecad = () => {
             ga="f"
           />
 
-          <S_div_01 ga="g"> espaço para upload documentos </S_div_01>
+          <S_div_01 ga="g">
+            <S_txt_label>
+              {`RG - CPF - CNPJ (se houver)`}
+            </S_txt_label>
+            <S_label_upload htmlFor='imageUp'>
+              {`Escolher fotos`}
+              <S_inpt_upload name="imageUp" id="imageUp" accept="image/*" type="file" />
+            </S_label_upload>
+          </S_div_01>
 
           <S_h3 ga="sub1"> {`Endereço do entregador`} </S_h3>
           <Inpt_01

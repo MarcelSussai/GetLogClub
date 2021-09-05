@@ -60,9 +60,9 @@ const S_input = styled.input`
   /* &::-webkit-calendar-picker-indicator {  filter: invert(100%); } */
   
   &::placeholder {
-    color: ${({theme}) => theme.colors.gray.c400 };
+    color: ${({theme, d}) => d === 'y' ? theme.colors.gray.c200 : theme.colors.gray.c400 };
     font-size: 14px;
-    
+    ${cusTR('.2s')}
   }
   &:focus {
     outline: none;
@@ -99,6 +99,7 @@ const Inpt_01 = (props) => {
         placeholder={placeholder}
         disabled={disable}
         className={disable ? 'desativado' : ''}
+        d={disable ? 'y' : 'n'}
       />
     </S_container_div>
   </>
