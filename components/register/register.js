@@ -44,6 +44,7 @@ const S_div_02 = styled.div`
 const S_div_03 = styled.div`
   padding: 4px 16px;
   border-bottom: solid 1px ${ ({theme}) => theme.colors.blue.c400 };
+  border-top: ${ ({theme, sel}) => sel ? 'solid 1px ' + theme.colors.blue.c400 : 'solid 1px ' + theme.colors.white };
   background: ${ ({theme, sel}) => sel ? theme.colors.blue.c100 : '' };
   position: relative;
   ${cusTR('.2s')}
@@ -55,7 +56,7 @@ const S_div_03 = styled.div`
 `
 const S_div_04 = styled.div`
   padding: 4px 16px;
-  border-bottom: solid 1px ${ ({theme}) => theme.colors.white };
+  border-bottom: ${ ({theme, sel}) => sel ? 'solid 1px ' + theme.colors.blue.c400 : 'solid 1px ' + theme.colors.white };
   background: ${ ({theme, sel}) => sel ? theme.colors.blue.c100 : '' };
   position: relative;
   ${cusTR('.2s')}
@@ -106,7 +107,7 @@ const S_h1 = styled.h1`
   line-height: 1;
   color: ${ ({theme}) => theme.colors.blue.c700 };
   ${cusTR('.2s')}
-  `
+`
 const S_h2 = styled.h2`
   ${cusTR('.2s')}
   font-size: 14px;
@@ -215,9 +216,9 @@ const Register = () => {
 
   useEffect(() => {
     let contador = 0
-    emailValid  ? contador++ : ''
-    passValid   ? contador++ : ''
-    cPassValid  ? contador++ : ''
+    emailValid  ? ++contador : ''
+    passValid   ? ++contador : ''
+    cPassValid  ? ++contador : ''
     contador === 3 ? setValidAll(true) : setValidAll(false)
     console.log('email: ', emailValid);
     console.log('pass: ', passValid);

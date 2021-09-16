@@ -10,7 +10,7 @@ const RegisterPage = () => {
 
   return (
     <>
-      <Head title="Login" />
+      <Head title="Cadastro inicial" />
       <Header />
       <Register />
     </>

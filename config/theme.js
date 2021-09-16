@@ -91,6 +91,7 @@ export const theme = {
     blackShadow2:       '#00000048',
     blackShadow3:       '#00000032',
     blackShadow4:       '#00000024',
+    blackShadow5:       '#00000008',
     greenShadow:        '#BCFD0012',
     blueShadow:         '#00BCFD12',
     redShadow:          '#FD410026',
@@ -176,7 +177,7 @@ const S_input = styled.input`
 
 export const Input_01 = (props) => {
 
-  const { txtLabel, txtPh, oc, name, type, valid, focus } = props
+  const { txtLabel, txtPh, oc, name, type, valid, focus, value, } = props
 
   const fnTrash = (e) => e.preventDefault()
 
@@ -184,7 +185,7 @@ export const Input_01 = (props) => {
     <>
       <S_container_input>
         <S_label valid={valid} HTMLFor={name}> {txtLabel || 'texto'} </S_label>
-        <S_input onFocus={focus || fnTrash} valid={valid} autoComplete={type === 'password' ? 'current-password' : ''} onChange={oc} name={name} id={name} type={type || 'text'} placeholder={txtPh} />
+        <S_input value={value} onFocus={focus || fnTrash} valid={valid} autoComplete={type === 'password' ? 'current-password' : ''} onChange={oc} name={name} id={name} type={type || 'text'} placeholder={txtPh} />
       </S_container_input>
     </>
   )

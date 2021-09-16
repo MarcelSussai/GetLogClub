@@ -10,7 +10,7 @@ const CadastroE = () => {
 
   return (
     <>
-      <Head title="Cadastro - Restaurante" />
+      <Head title="Cadastro - Entregadores" />
       <Header />
       <Ecad />
     </>

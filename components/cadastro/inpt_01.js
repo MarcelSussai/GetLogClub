@@ -28,10 +28,10 @@ const S_input = styled.input`
   padding: 10px 8px 4px 8px;
   width: 100%;
   font-weight: 500;
-  border-top: solid 4px ${({theme}) => theme.colors.brown.c600 };
-  border-right: solid 1px ${({theme}) => theme.colors.brown.c600 };
-  border-bottom: solid 2px ${({theme}) => theme.colors.brown.c600 };
-  border-left: solid 1px ${({theme}) => theme.colors.brown.c600 };
+  border-top: solid 4px ${({theme, valid}) => valid === 'y' ? theme.colors.brown.c600 : theme.colors.red.p500 };
+  border-right: solid 1px ${({theme, valid}) => valid === 'y' ? theme.colors.brown.c600 : theme.colors.red.p500 };
+  border-bottom: solid 2px ${({theme, valid}) => valid === 'y' ? theme.colors.brown.c600 : theme.colors.red.p500 };
+  border-left: solid 1px ${({theme, valid}) => valid === 'y' ? theme.colors.brown.c600 : theme.colors.red.p500 };
   background: ${({theme}) => theme.colors.white };
   border-top-left-radius: 8px;
   /* border-top-right-radius: 8px; */
@@ -84,22 +84,26 @@ const S_input = styled.input`
 
 const Inpt_01 = (props) => {
 
-  const { onChange, type, value, name, placeholder, textLabel, ga, disable, ml } = props
+  const { onChange, type, value, name, placeholder, textLabel, ga, disable, ml, valid, onFocus, onLoad } = props
+
+  const onF = (e) => {}
 
   return (
   <>
     <S_container_div ga={ga || ''} ml={ml ? 'y' : 'n'}>
       <S_label ml={ml ? 'y' : 'n'} HTMLFor={name} d={disable ? 'y' : 'n'}> {textLabel || 'Label'} </S_label>
       <S_input 
-        onChange={onChange}
+        onChange={onChange} onFocus={onFocus || onF}
         type={type || 'text'}
         value={value}
         name={name}
+        onLoad={onLoad || onF}
         id={name}
         placeholder={placeholder}
         disabled={disable}
         className={disable ? 'desativado' : ''}
         d={disable ? 'y' : 'n'}
+        valid={valid ? 'y' : 'n' }
       />
     </S_container_div>
   </>

@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import styled from 'styled-components';
 import {
   cusMQ, cusTR, fontF,
@@ -134,12 +135,31 @@ const S_btn_01 = styled.button`
   }
 `
 
-
+const r_email = /^[a-z0-9_.-]+[@][a-z0-9-]+[\.][a-z0-9-]+[\.]?[a-z0-9-]+$/i
+const r_senha = /^[\S]{6,}$/i
 
 const Login = () => {
+
+  const [email, setEmail]               = useState('')
+  const [emailValid, setEmailValid]     = useState(false)
+
+  const [senha, setSenha]               = useState('')
+  const [senhaValid, setSenhaValid]     = useState(false)
   
-  const handle_01 = (e) => console.log(e.target.value)
-  const handle_02 = (e) => console.log(e.target.value)
+  
+  const is_email_valid = (v) => {
+    setEmail(v)
+    v.match(r_email) ? setEmailValid(true) : setEmailValid(false) 
+  }
+  const is_senha_valid = (v) => {
+    setSenha(v)
+    v.match(r_senha) ? setSenhaValid(true) : setSenhaValid(false) 
+  }
+
+
+
+  const handle_01 = (e) => is_email_valid(e.target.value)
+  const handle_02 = (e) => is_senha_valid(e.target.value)
 
   return (
   <>
@@ -151,11 +171,10 @@ const Login = () => {
         <S_div_03>
           <form className="form">
             <S_div_02>
-              <Input_01 oc={handle_01} txtLabel="E-mail" name="email" txtPh="Digite aqui seu e-mail" />
-              <Input_01 oc={handle_02} txtLabel="Senha" name="senha" txtPh="Digite aqui sua senha" type="password" />
+              <Input_01 focus={handle_01} value={email} valid={emailValid} oc={handle_01} txtLabel="E-mail" name="email" txtPh="Digite aqui seu e-mail" />
+              <Input_01 focus={handle_02} value={senha} valid={senhaValid} oc={handle_02} txtLabel="Senha" name="senha" txtPh="Digite aqui sua senha" type="password" />
               <S_div_04>
                 <S_a_01> {`Esqueci a senha`} </S_a_01>
-                <Chk_01 />
               </S_div_04>
             </S_div_02>
           </form>
