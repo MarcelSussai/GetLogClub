@@ -538,12 +538,17 @@ const Rcad = () => {
   // ________________________________________________
   const hdl_upload_images = (e) => {
     if(e.target.files) {
-      setSizes(sizes + e.target.files[0].size)
-      console.log('arquivo selecionado:', e.target.files[0].size)
-      let read = new FileReader()
+      if(e.target.files[0].size >= 1000000) {
+        window.alert('O arquivo está muito grande')
+        return;
+      } else {
+        setSizes(sizes + e.target.files[0].size)
+        console.log('arquivo selecionado:', e.target.files[0].size)
+      }
       if (sizes > 6000000) {
         window.alert('Os arquivos estão muito grandes')
       } else {
+        let read = new FileReader()
         read.readAsDataURL(e.target.files[0])
         read.onloadend = () => {
           setFilesArrayNames([...filesArrayNames, { 
