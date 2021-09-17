@@ -15,10 +15,11 @@ const S_header = styled.header`
   left: 0;
   z-index: 200;
   display: flex;
-  justify-content: center;
+  justify-content:${ ({hideActive}) => hideActive ? 'flex-start' : 'center' };
+  padding-left: ${ ({hideActive}) => hideActive ? '32px' : '' };
 
   ${cusMQ(768)} {
-    width: 50%;
+    width: ${ ({hideActive}) => hideActive ? '100%' : '50%' };
   }
   ${cusMQ(1024)} {
     width: 100%;
@@ -32,15 +33,15 @@ const S_div_01 = styled.div`
   cursor: pointer;
 `
 const S_img_01 = styled.img`
-  height: 72px;
+  height: ${ ({hideActive}) => hideActive ? '40px' : '72px' };
   ${cusTR('.2s')}
   
   ${cusMQ(425)} {
-    height: 88px;
+    height: ${ ({hideActive}) => hideActive ? '56px' : '88px' };
   }
 `
 const S_div_02 = styled.div`
-  width: 100%;
+  width:${ ({hideActive}) => hideActive ? 'fit-content' : '100%' };
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -53,20 +54,21 @@ const S_div_02 = styled.div`
   }
 `
 
-const Header = () => {
-
+const Header = (props) => {
+  const { hideNav } = props
   const {testeCtx} = useContext(AppCtx)
 
   return (
   <>
-    <S_header>
-      <S_div_02>
+    <S_header hideActive={hideNav}>
+      <S_div_02 hideActive={hideNav}>
         <Link href="/">
           <S_div_01>
-            <S_img_01 src="/logoGetLogClub.svg" />
+            <S_img_01 hideActive={hideNav} src="/logoGetLogClub.svg" />
           </S_div_01>
         </Link>
-        <Nav_01 />
+        { hideNav ? '' : <Nav_01 /> }
+        
       </S_div_02>
     </S_header>
   </>

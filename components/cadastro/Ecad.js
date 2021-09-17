@@ -436,6 +436,7 @@ const Ecad = () => {
   const [uploadValid, setUploadValid]             = useState(false)
   // ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
 
+  // ________________________________________________
   const [valAdress, setValAdress] = useState(Number)
   const [valVehicle, setValVehicle] = useState(Number)
   const [valDados, setValDados] = useState(Number)
@@ -445,30 +446,107 @@ const Ecad = () => {
   const [docValid, setDocValid] = useState(false)
   const [inicial, setInicial] = useState(false)
   const [choiceValid, setChoiceValid] = useState(true)
+  const [sizes, setSizes] = useState(Number)
+  // ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
+
+  // ________________________________
+  const _img_01 = useRef(null)
+  // ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
+
+
 
   // ________________________________________________
-  useEffect(() => { console.log('valTotal: (atual)', valTotal) }, [valTotal])
+  // useEffect(() => {
+  //   console.log('total:', sizes)
+  //   // 6 000 000
+  //   // 7 288 138
+  // }, [sizes])
   // ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
+
+  // ________________________________________________
+  // useEffect(() => { console.log('valTotal: (atual)', valTotal) }, [valTotal])
+  // ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
+
   // ________________________________________________
   // useEffect(() => {
   //   console.log('valVehicle: (atual)', valVehicle)
   // }, [valVehicle])
   // ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
+
   // ________________________________________________
   // useEffect(() => {
   //   console.log('valDados: (atual)', valDados)
   // }, [valDados])
   // ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
+
   // ________________________________________________
   // useEffect(() => {
   //   console.log('valadres: (atual)', valAdress)
   // }, [valAdress])
   // ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
 
+  // ________________________________________________
+  useEffect(() => {
+    setPass(Cookies.get('pass'))
+    is_email_valid(Cookies.get('email'))
+    setInicial(true)
+  }, [])
+  // ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
 
-  // ________________________________
-  const _img_01 = useRef(null)
-  // ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
+  // ________________________________________________
+  useEffect(() => {
+    // console.log('________________________________');
+    // console.log(admin)
+    // console.log('‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾');
+    if(dadosCadUser) {
+      if(dadosCadUser.hasOwnProperty('error')) {
+        setDadosCadVehicle(null)
+      }
+    }
+    // console.log('________________________________');
+    // console.log(dadosCadUser);
+    // console.log(dadosCadVehicle);
+    // console.log('‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾');
+  }, [admin, dadosCadVehicle, dadosCadUser])
+  // ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
+
+  // ________________________________________________
+  useEffect(() => {
+    console.log(filesArrayNames);
+  }, [filesArrayNames])
+  // ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
+
+  // ________________________________________________
+  useEffect(() => {
+    if(inicial !== false) {
+      allValidations()
+      validandoTodos()
+    }
+    console.log('todos', valTotal)
+  }, [
+    rua, numero, bairro, cidade, estado, filesArrayNames,
+    cep, ano, modelo, placa, cor, nome, choiceValid,
+    rg, cpf, email, tel_01, data_nasc, tel_02
+  ])
+  // ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
+
+  // ________________________________________________
+  // useEffect(() => {
+  //   adressValidation()
+  // }, [rua, numero, bairro, cidade, estado, cep])
+  // ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
+
+  // ________________________________________________
+  // useEffect(() => {
+  //   vehicleValidation()
+  // }, [ano, modelo, placa, cor])
+  // ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
+
+  // ________________________________________________
+  // useEffect(() => {
+  //   dadosValidations()
+  // }, [nome, rg, cpf, email, tel_01, data_nasc, tel_02])
+  // ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
 
 
 
@@ -490,74 +568,6 @@ const Ecad = () => {
     setChoiceValid(false)
   }
   // ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
-
-
-
-  // ________________________________________________
-  useEffect(() => {
-    setPass(Cookies.get('pass'))
-    is_email_valid(Cookies.get('email'))
-    setInicial(true)
-  }, [])
-  // ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
-
-
-  // ________________________________________________
-  useEffect(() => {
-    // console.log('________________________________');
-    // console.log(admin)
-    // console.log('‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾');
-    if(dadosCadUser) {
-      if(dadosCadUser.hasOwnProperty('error')) {
-        setDadosCadVehicle(null)
-      }
-    }
-    // console.log('________________________________');
-    // console.log(dadosCadUser);
-    // console.log(dadosCadVehicle);
-    // console.log('‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾');
-  }, [admin, dadosCadVehicle, dadosCadUser])
-  // ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
-
-
-
-  // ________________________________________________
-  useEffect(() => {
-    console.log(filesArrayNames);
-  }, [filesArrayNames])
-  // ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
-
-
-
-  // ________________________________________________
-  useEffect(() => {
-    if(inicial !== false) {
-      allValidations()
-      validandoTodos()
-    }
-    console.log('todos', valTotal)
-  }, [
-    rua, numero, bairro, cidade, estado, filesArrayNames,
-    cep, ano, modelo, placa, cor, nome, choiceValid,
-    rg, cpf, email, tel_01, data_nasc, tel_02
-  ])
-  // ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
-  // ________________________________________________
-  // useEffect(() => {
-  //   adressValidation()
-  // }, [rua, numero, bairro, cidade, estado, cep])
-  // ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
-  // ________________________________________________
-  // useEffect(() => {
-  //   vehicleValidation()
-  // }, [ano, modelo, placa, cor])
-  // ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
-
-  // ________________________________________________
-  // useEffect(() => {
-  //   dadosValidations()
-  // }, [nome, rg, cpf, email, tel_01, data_nasc, tel_02])
-  // ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
 
 
 
@@ -638,7 +648,8 @@ const Ecad = () => {
 
 
 
-  const vehicleValidation = () => {
+  // ________________________________________________
+  const vehicleValidation       = () => {
     let countV = 0
     is_ano_valid(ano)
     is_modelo_valid(modelo)
@@ -650,8 +661,7 @@ const Ecad = () => {
     if (corValid) { ++countV }
     setValVehicle(countV)
   }
-
-  const adressValidation = () => {
+  const adressValidation        = () => {
     let count = 0
     is_rua_valid(rua)
     is_numero_valid(numero)
@@ -667,8 +677,7 @@ const Ecad = () => {
     if(cepValid)  { ++count }
     setValAdress(count)
   }
-
-  const dadosValidations = () => {
+  const dadosValidations        = () => {
     let countD = 0
     is_nome_valid(nome)
     is_rg_valid(rg)
@@ -686,8 +695,7 @@ const Ecad = () => {
     if(tel_02Valid) { ++countD }
     setValDados(countD)
   }
-
-  const allValidations = () => {
+  const allValidations          = () => {
     setValTotal(false)
     dadosValidations()
     adressValidation()
@@ -714,8 +722,7 @@ const Ecad = () => {
       setSizes(0)
     }
   }
-
-  const validandoTodos = () => {
+  const validandoTodos          = () => {
     if(docValid && vahicleValid && adressValid && choiceValid) {
       if(filesArrayNames.length > 0) { 
         setValTotal(true)
@@ -724,6 +731,9 @@ const Ecad = () => {
       setValTotal(false)
     }
   }
+  // ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
+
+
 
   // ________________________________________________
   const hdl_restaurante     = (e) => {
@@ -872,12 +882,6 @@ const Ecad = () => {
   const hdl_cor             = (e) => { is_cor_valid(e.target.value) }
   // ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
 
-  const [sizes, setSizes] = useState(Number)
-  useEffect(() => {
-    console.log('total:', sizes)
-    // 6 000 000
-    // 7 288 138
-  }, [sizes])
 
   // ________________________________________________
   const hdlw_fileDel = (v) => {

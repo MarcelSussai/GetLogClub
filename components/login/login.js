@@ -1,9 +1,11 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import {
   cusMQ, cusTR, fontF,
   S_main_base, Input_01, Chk_01,
 } from "../../config/theme";
+import { axiosSimp } from '../services/axios';
+import { useRouter } from 'next/router'
 
 
 const S_main = styled(S_main_base)`
@@ -119,20 +121,22 @@ const S_a_01 = styled.a`
 `
 const S_btn_01 = styled.button`
   ${cusTR('.2s')}
+  grid-area: ${ ({ga}) => ga };
   padding: 8px 16px 8px 16px;
   font-weight: 600;
   border: none;
-  width: 40%;
+  width: 240px;
   background: ${ ({theme}) => theme.colors.aqua.c600 };
   color: ${ ({theme}) => theme.colors.green.p300 };
   border-radius: 8px;
   box-shadow: 2px 4px 8px ${ ({theme}) => theme.colors.blackShadow3 };
   cursor: pointer;
+  opacity: ${ ({disa}) => !disa ? '.2' : '1' };
   
   &:hover {
     background: ${ ({theme}) => theme.colors.aqua.c700 };
-
   }
+  
 `
 
 const r_email = /^[a-z0-9_.-]+[@][a-z0-9-]+[\.][a-z0-9-]+[\.]?[a-z0-9-]+$/i
@@ -145,8 +149,17 @@ const Login = () => {
 
   const [senha, setSenha]               = useState('')
   const [senhaValid, setSenhaValid]     = useState(false)
-  
-  
+
+  const [valDados, setValDados]         = useState(false)
+
+
+
+  useEffect(() => {
+    validando()
+  }, [email, senha])
+
+
+
   const is_email_valid = (v) => {
     setEmail(v)
     v.match(r_email) ? setEmailValid(true) : setEmailValid(false) 
@@ -156,10 +169,49 @@ const Login = () => {
     v.match(r_senha) ? setSenhaValid(true) : setSenhaValid(false) 
   }
 
-
-
   const handle_01 = (e) => is_email_valid(e.target.value)
   const handle_02 = (e) => is_senha_valid(e.target.value)
+
+  const validando = () => {
+    let c = 0
+    is_email_valid(email)
+    is_senha_valid(senha)
+    emailValid ? ++c : ''
+    senhaValid ? ++c : ''
+    c === 2 ? setValDados(true) : setValDados(false)
+  }
+
+  const submitHdl = async (e) => {
+    e.preventDefault()
+
+    console.log('________________________________')
+    console.log('começa o envio do login para api')
+    console.log('‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾')
+
+    await axiosSimp({
+      method: 'post',
+      url: '/login',
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Headers": "Authorization", 
+        "Access-Control-Allow-Methods": "GET, POST, OPTIONS, PUT, PATCH, DELETE" ,
+        "Content-Type": "application/json;charset=UTF-8"
+      },
+      data: {
+        email: email,
+        pass: senha
+      }
+    }).then(res => res.data).then(async (r) => {
+      console.log('________________________________')
+      console.log('retorno do envio do login')
+      console.log('validando se retornou um token')
+      console.log('‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾')
+      console.log('________________________________')
+      console.log(r)
+      console.log('‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾')
+
+    })
+  }
 
   return (
   <>
@@ -179,7 +231,7 @@ const Login = () => {
             </S_div_02>
           </form>
         </S_div_03>
-        <S_btn_01> {`Entrar`} </S_btn_01>
+        <S_btn_01 disa={valDados} disabled={!valDados} onClick={submitHdl}> {`Entrar`} </S_btn_01>
       </S_section_01>
     </S_main>
   </>
