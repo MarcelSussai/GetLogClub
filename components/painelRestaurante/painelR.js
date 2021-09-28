@@ -13,6 +13,29 @@ import GoogleMapReact from 'google-map-react'
 
 
 
+/*
+  todos>> painel
+  
+  aprovado>>
+    mapa mostrando os pedidos sendo entregues
+    entregadores disponiveis
+    novos pedidos
+    pedidos sendo entregues
+    quantidade de pedidos na ultima semana
+    quantidade de pedidos por dia
+    total valor 
+
+  não aprovado>>
+    avisar que precisa aguardar a aprovação,
+
+  todos>> financeiro
+
+  quantidade 
+
+*/
+
+
+
 // ESTILOS_________________________________________________________
 const S_main = styled(S_main_base)`
 `

@@ -1,7 +1,7 @@
 import axios from "axios";
 
 
-const dev = false
+const dev = true
 export const url =  dev ? 'http://localhost:3001/' : 'https://app.getlogclub.com.br/'
 
 export const axiosSimp = axios.create({

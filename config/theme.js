@@ -92,6 +92,7 @@ export const theme = {
     blackShadow3:       '#00000032',
     blackShadow4:       '#00000024',
     blackShadow5:       '#00000008',
+    blackShadow6:       '#00000064',
     greenShadow:        '#BCFD0012',
     blueShadow:         '#00BCFD12',
     redShadow:          '#FD410026',

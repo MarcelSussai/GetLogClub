@@ -3,26 +3,22 @@ import { cusMQ, cusTR, fontF } from "../../config/theme";
 import { useContext, useEffect } from "react";
 import Link from 'next/link'
 
-import { AppCtx } from "../contexts/ctxGlobal";
 import Nav_01 from '../nav_01/nav_01';
 
 
 
 const S_header = styled.header`
-  width: 100%;
+  width:${ ({hideActive}) => hideActive ? 'fit-content' : '100%' };
   position: fixed;
   top: 0;
   left: 0;
   z-index: 200;
   display: flex;
   justify-content:${ ({hideActive}) => hideActive ? 'flex-start' : 'center' };
-  padding-left: ${ ({hideActive}) => hideActive ? '32px' : '' };
+  padding-left: ${ ({hideActive}) => hideActive ? '8px' : '' };
 
   ${cusMQ(768)} {
-    width: ${ ({hideActive}) => hideActive ? '100%' : '50%' };
-  }
-  ${cusMQ(1024)} {
-    width: 100%;
+    width:${ ({hideActive}) => hideActive ? 'fit-content' : '100%' };
   }
 `
 const S_div_01 = styled.div`
@@ -44,19 +40,22 @@ const S_div_02 = styled.div`
   width:${ ({hideActive}) => hideActive ? 'fit-content' : '100%' };
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content: flex-start;
+  padding-left:${ ({hideActive}) => hideActive ? '' : '16px' };
   
   ${cusMQ(768)} {
+  padding-left:${ ({hideActive}) => hideActive ? '' : '32px' };
+
   }
   ${cusMQ(1024)} {
-    width: 960px;
+    padding-left: unset;
+    width:${ ({hideActive}) => hideActive ? 'fit-content' : '960px' };
     justify-content: space-between;
   }
 `
 
 const Header = (props) => {
   const { hideNav } = props
-  const {testeCtx} = useContext(AppCtx)
 
   return (
   <>

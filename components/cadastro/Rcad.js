@@ -402,10 +402,6 @@ const Rcad = () => {
   // ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
 
   // ________________________________________________
-  const [valUserAdress, setValUserAdress]                   = useState(Number)
-  const [valRestaurantAdress, setValRestaurantAdress]       = useState(Number)
-  const [valUserDados, setValUserDados]                     = useState(Number)
-  const [valRestaurantDados, setValRestaurantDados]         = useState(Number)
   const [valTotal, setValTotal]                             = useState(false)
   const [userAdressValid, setUserAdressValid]               = useState(false)
   const [restaurantAdressValid, setRestaurantAdressValid]   = useState(false)
@@ -416,8 +412,16 @@ const Rcad = () => {
 
   // ________________________________________________
   const [sizes, setSizes] = useState(Number)
-  const [admin, setAdmin] = useState('[RESTAURANTE]')
+  const [admin, setAdmin] = useState('')
   // ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
+
+
+
+  const objAdmin = {
+    admin: false,
+    isRepresentant: true,
+    
+  }
 
 
 
@@ -519,20 +523,19 @@ const Rcad = () => {
     setPass(Cookies.get('pass'))
     is_email_valid(Cookies.get('email'))
     setInicial(true)
+    setAdmin(JSON.stringify(objAdmin))
   }, [])
   // ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
 
+  // useEffect(() => { console.log(admin) }, [admin])
 
 
   useEffect(() => {
-    if(inicial !== false) {
-      allValidations()
-      validandoTodos()
-    }
+    if(inicial) { validandoTodos() }
   }, [
     nome, rg, cpf, email, tel_01, data_nasc, rua, numero,
     bairro, cidade, estado, cep, nomeR, rSocial, cnpj, tel_02,
-    ruaRest, numeroR, bairroR, cidadeR, estadoR, cepR
+    ruaRest, numeroR, bairroR, cidadeR, estadoR, cepR, filesArrayNames
   ])
 
   // ________________________________________________
@@ -560,15 +563,14 @@ const Rcad = () => {
         }
       }
       setFilesArrays([ ...filesArrays, { file: e.target.files[0] }])
-      if(filesArrayNames.length > 0) { 
-        console.log('maior que 0 a quantidade de imagens')
+      if(filesArrayNames.length > 0) {
         setUploadValid(true)
       } else { 
         setUploadValid(false)
         setSizes(0)
       }
       validandoTodos()
-    }
+    } else { validandoTodos() }
   }
   const hdlw_fileDel = (v) => {
     let values = filesArrayNames
@@ -600,7 +602,7 @@ const Rcad = () => {
     if(cidadeValid) { ++c }
     if(estadoValid) { ++c }
     if(cepValid)  { ++c }
-    setValUserAdress(c)
+    c === 6 ? setUserAdressValid(true) : setUserAdressValid(false)
   }
   const restaurantAdressValidation = () => {
     let c = 0
@@ -616,7 +618,7 @@ const Rcad = () => {
     if(cidadeRValid) { ++c }
     if(estadoRValid) { ++c }
     if(cepRValid)  { ++c }
-    setValRestaurantAdress(c)
+    c === 6 ? setRestaurantAdressValid(true) : setRestaurantAdressValid(false)
   }
   const userDadosValidation = () => {
     let c = 0
@@ -632,7 +634,7 @@ const Rcad = () => {
     if(emailValid) { ++c }
     if(tel_01Valid) { ++c }
     if(data_nascValid) { ++c }
-    setValUserDados(c)
+    c === 6 ? setDadosValid(true) : setDadosValid(false)
   }
   const restaurantDadosValidation = () => {
     let c = 0
@@ -644,18 +646,14 @@ const Rcad = () => {
     if(rSocialValid) { ++c }
     if(cnpjValid) { ++c }
     if(tel_02Valid) { ++c }
-    setValRestaurantDados(c)
+    c === 4 ? setRestaurantValid(true) : setRestaurantValid(false)
   }
   const allValidations = () => {
     setValTotal(false)
     userDadosValidation()
+    userAdressValidation()
     restaurantDadosValidation()
     restaurantAdressValidation()
-    userAdressValidation()
-    if(valUserDados === 6) { setDadosValid(true) }
-    if(valRestaurantDados === 4) { setRestaurantValid(true) }
-    if(valRestaurantAdress === 6) { setRestaurantAdressValid(true) }
-    if(valUserAdress === 6) { setUserAdressValid(true) }
     if(filesArrayNames.length > 0) {
       setUploadValid(true)
     } else {
@@ -664,6 +662,7 @@ const Rcad = () => {
     }
   }
   const validandoTodos = () => {
+    allValidations()
     if(dadosValid && restaurantValid && userAdressValid && restaurantAdressValid) {
       if(filesArrayNames.length > 0) {
         setValTotal(true)
@@ -839,7 +838,7 @@ const Rcad = () => {
   const hdl_tel_02          = (e) => {
     is_tel_02_valid(e.target.value)
   }
-  const hdl_rua_rest           = (e) => {
+  const hdl_rua_rest        = (e) => {
     is_ruaRest_valid(e.target.value)
   }
   const hdl_numero_r        = (e) => {

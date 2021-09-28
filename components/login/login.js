@@ -1,13 +1,20 @@
-import { useState, useEffect } from 'react';
-import styled from 'styled-components';
+// ________________________________________________________________
+import { useState, useEffect } from 'react'
+import styled from 'styled-components'
 import {
-  cusMQ, cusTR, fontF,
+  cusMQ, cusTR, fontF, theme,
   S_main_base, Input_01, Chk_01,
-} from "../../config/theme";
-import { axiosSimp } from '../services/axios';
+} from "../../config/theme"
+import { axiosSimp } from '../services/axios'
 import { useRouter } from 'next/router'
+import Modal from 'react-modal'
+import Cookies from 'js-cookie'
+import {useMediaQuery, useMediaQueries} from '@react-hook/media-query'
+// ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
 
 
+
+// ________________________________________________________________
 const S_main = styled(S_main_base)`
 `
 const S_section_01 = styled.section`
@@ -100,6 +107,17 @@ const S_div_04 = styled.div`
   flex-direction: row;
   justify-content: space-between;
 `
+const S_div_05 = styled.div`
+  ${fontF}
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  padding: 16px;
+`
 const S_a_01 = styled.a`
   ${cusTR('.2s')}
   line-height: 1;
@@ -138,28 +156,88 @@ const S_btn_01 = styled.button`
   }
   
 `
+const S_btn_02 = styled.button`
+  ${cusTR('.2s')}
+  padding: 8px 16px 8px 16px;
+  font-weight: 600;
+  border: none;
+  width: 128px;
+  background: ${ ({theme}) => theme.colors.aqua.c600 };
+  color: ${ ({theme}) => theme.colors.green.p300 };
+  border-radius: 8px;
+  box-shadow: 2px 4px 8px ${ ({theme}) => theme.colors.blackShadow3 };
+  cursor: pointer;
+  
+  /* ${cusMQ('1024')} {
+    position: absolute;
+    bottom: 16px;
+  } */
+`
+const S_h2_01 = styled.h2`
+  font-size: 20px;
+  color: ${ ({theme}) => theme.colors.red.c600 };
+`
 
+// ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
+
+
+
+// ________________________________________________________________
 const r_email = /^[a-z0-9_.-]+[@][a-z0-9-]+[\.][a-z0-9-]+[\.]?[a-z0-9-]+$/i
 const r_senha = /^[\S]{6,}$/i
+// ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
 
+
+
+// ________________________________
 const Login = () => {
 
+  const router = useRouter()
+  // ________________________________________________
+  const media_1024 = useMediaQuery('(min-width: 1024px)')
+  // ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
+
+
+
+  // ________________________________________________
   const [email, setEmail]               = useState('')
   const [emailValid, setEmailValid]     = useState(false)
-
   const [senha, setSenha]               = useState('')
   const [senhaValid, setSenhaValid]     = useState(false)
-
   const [valDados, setValDados]         = useState(false)
+  const [isOpenModal, setIsOpenModal]   = useState(false)
+  const [wModal, setWModal]             = useState(80)
+  const [hModal, setHModal]             = useState(40)
+  const [lModal, setLModal]             = useState((100 - wModal) / 2)
+  const [tModal, setTModal]             = useState((100 - hModal) / 2)
+  const [msgErro, setMsgErro]           = useState('Mensagem de erro padrão!')
+  // ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
 
 
 
+  // ________________________________________________
+  useEffect(() => {
+    if(media_1024) {
+      setWModal(48)
+      setLModal((100 - 48) / 2)
+    } else {
+      setWModal(80)
+      setLModal((100 - 80) / 2)
+    }
+  }, [media_1024])
+  // ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
+
+
+
+  // ________________________________________________
   useEffect(() => {
     validando()
   }, [email, senha])
+  // ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
 
 
 
+  // ________________________________________________
   const is_email_valid = (v) => {
     setEmail(v)
     v.match(r_email) ? setEmailValid(true) : setEmailValid(false) 
@@ -168,10 +246,8 @@ const Login = () => {
     setSenha(v)
     v.match(r_senha) ? setSenhaValid(true) : setSenhaValid(false) 
   }
-
   const handle_01 = (e) => is_email_valid(e.target.value)
   const handle_02 = (e) => is_senha_valid(e.target.value)
-
   const validando = () => {
     let c = 0
     is_email_valid(email)
@@ -180,41 +256,106 @@ const Login = () => {
     senhaValid ? ++c : ''
     c === 2 ? setValDados(true) : setValDados(false)
   }
+  // ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
 
-  const submitHdl = async (e) => {
-    e.preventDefault()
 
-    console.log('________________________________')
-    console.log('começa o envio do login para api')
-    console.log('‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾')
 
-    await axiosSimp({
-      method: 'post',
-      url: '/login',
-      headers: {
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Headers": "Authorization", 
-        "Access-Control-Allow-Methods": "GET, POST, OPTIONS, PUT, PATCH, DELETE" ,
-        "Content-Type": "application/json;charset=UTF-8"
-      },
-      data: {
-        email: email,
-        pass: senha
-      }
-    }).then(res => res.data).then(async (r) => {
-      console.log('________________________________')
-      console.log('retorno do envio do login')
-      console.log('validando se retornou um token')
-      console.log('‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾')
-      console.log('________________________________')
-      console.log(r)
-      console.log('‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾')
+  // ________________________________________________
+  const modal_open      = () => setIsOpenModal(true)
+  const modal_close     = () => {
+    setIsOpenModal(false)
+    // document.location.reload()
+    setSenha('')
+    setEmail('')
+  }
+  // ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
 
-    })
+
+
+  // ________________________________________________
+  const submitHdl = async () => {
+
+    // console.log('________________________________')
+    // console.log('começa o envio do login para api')
+    // console.log('‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾')
+    validando()
+    if(valDados) {
+      await axiosSimp({
+        method: 'post',
+        url: '/login',
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Headers": "Authorization", 
+          "Access-Control-Allow-Methods": "GET, POST, OPTIONS, PUT, PATCH, DELETE" ,
+          "Content-Type": "application/json;charset=UTF-8"
+        },
+        data: {
+          email: email,
+          pass: senha
+        }
+      }).then(res => res.data).then(async (r) => {
+        if (r.hasOwnProperty('error')) {
+          setMsgErro(r.error)
+          // Cookies.remove('token')
+          // Cookies.remove('nome')
+          // Cookies.remove('email')
+          modal_open()
+        } else {
+          // console.log('________________________________')
+          // console.log('retorno do envio do login')
+          // console.log('validando se retornou um token')
+          // console.log('‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾')
+          console.log('________________________________')
+          console.log(r)
+          console.log('‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾')
+          console.log(r.admin)
+          let adm = JSON.parse(r.admin)
+          console.log(adm)
+
+          Cookies.set('token', r.token)
+          Cookies.set('nome', r.name)
+          Cookies.set('email', r.name)
+          if(adm.hasOwnProperty('isRepresentant')) {
+            if(adm.isRepresentant) {
+              router.push('/painelRestaurant')
+            }
+          }
+          if(adm.hasOwnProperty('isEntregador')) {
+            if(adm.isEntregador) {
+              router.push('/painelEntragador')
+            }
+          }
+        }
+  
+        
+      })
+    }
+  }
+  // ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
+
+  const estilo_modal_content = {
+    width: `${wModal}%`,
+    height: `${hModal}%`,
+    left: `${lModal}%`,
+    top: `${tModal}%`,
+    padding: 0,
+    zIndex: 200,
+    border: `solid 1px ${theme.colors.red.c300}`,
+    boxShadow: `0 0 32px ${theme.colors.red.c200}`,
   }
 
   return (
   <>
+    <Modal
+      onRequestClose={modal_close} isOpen={isOpenModal} ariaHideApp={false}
+      shouldCloseOnEsc={true} shouldCloseOnOverlayClick={true}
+      style={{ content: estilo_modal_content }}
+    >
+      <S_div_05>
+        <S_h2_01> {msgErro} </S_h2_01>
+        <S_btn_02 onClick={modal_close}>ok</S_btn_02>
+      </S_div_05>
+    </Modal>
     <S_main>
       <S_section_01>
         <S_div_01>
@@ -238,5 +379,9 @@ const Login = () => {
 );
 
 }
+// ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
 
+
+// ________________
 export default Login;
+// ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾

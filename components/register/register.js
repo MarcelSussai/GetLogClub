@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { cusMQ, cusTR, fontF, Input_01, S_main_base } from "../../config/theme";
 import { useRouter } from 'next/router'
-import Cookies from 'js-cookie';
+import Cookies from 'js-cookie'
 
 
 const S_main = styled(S_main_base)`

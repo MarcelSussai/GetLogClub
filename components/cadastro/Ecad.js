@@ -54,11 +54,6 @@ const S_form = styled.form`
       "sub1 sub1 sub1 sub1 sub1 sub1 sub1 sub1"
       "h    h    h    h    i    i    j    j"
       "k    k    l    l    m    m    n    n"
-      "hr1  hr1  hr1  hr1  hr1  hr1  hr1  hr1 "
-      "sub2 sub2 sub2 sub2  sub2 sub2 sub2 sub2"
-      "p    p    p    p    p    p    p    p"
-      "hr2  hr2  hr2  hr2  hr2  hr2  hr2  hr2 "
-      "tit2 tit2 tit2 tit2 tit2 tit2 tit2 tit2"
       "q    q    q    q    r    r    r    r"
       "s    s    s    s    t    t    t    t"
       "v    v    v    v    v    v    v    v"
@@ -78,10 +73,6 @@ const S_form = styled.form`
       "sub1 sub1 sub1 sub1 sub1 sub1 sub1 sub1"
       "h    h    h    h    i    i    j    j"
       "k    k    l    l    m    m    n    n"
-      "hr1  hr1  hr1  hr1  hr1  hr1  hr1  hr1 "
-      "sub2 sub2 sub2 sub2 sub2 sub2 sub2 sub2"
-      "p    p    p    p    p    p    .    ."
-      "hr2  hr2  hr2  hr2  hr2  hr2  hr2  hr2 "
       "tit2 tit2 tit2 tit2 tit2 tit2 tit2 tit2"
       "q    q    r    r    s    s    t    t"
       "v    v    v    v    v    v    v    v"
@@ -383,7 +374,6 @@ const r_cep     = /^\d{5}-?\d{3}$/
 // ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
 
 
-
 const Ecad = () => {
   const router = useRouter()
 
@@ -426,9 +416,9 @@ const Ecad = () => {
   const [placaValid, setPlacaValid]               = useState(false)
   const [cor, setCor]                             = useState('')
   const [corValid, setCorValid]                   = useState(false)
-  const [onG, setOnG]                             = useState(true)
+  const [onG, setOnG]                             = useState(false)
   const [onR, setOnR]                             = useState(false)
-  const [admin, setAdmin]                         = useState('[ENTREGADOR] - [GETLOGCLUB]')
+  const [admin, setAdmin]                         = useState('')
   const [dadosCadUser, setDadosCadUser]           = useState(null)
   const [dadosCadVehicle, setDadosCadVehicle]     = useState(null)
   const [filesArrayNames, setFilesArrayNames]     = useState([])
@@ -437,9 +427,6 @@ const Ecad = () => {
   // ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
 
   // ________________________________________________
-  const [valAdress, setValAdress] = useState(Number)
-  const [valVehicle, setValVehicle] = useState(Number)
-  const [valDados, setValDados] = useState(Number)
   const [valTotal, setValTotal] = useState(false)
   const [adressValid, setAdressValid] = useState(false)
   const [vahicleValid, setVehicleValid] = useState(false)
@@ -453,43 +440,12 @@ const Ecad = () => {
   const _img_01 = useRef(null)
   // ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
 
-
-
-  // ________________________________________________
-  // useEffect(() => {
-  //   console.log('total:', sizes)
-  //   // 6 000 000
-  //   // 7 288 138
-  // }, [sizes])
-  // ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
-
-  // ________________________________________________
-  // useEffect(() => { console.log('valTotal: (atual)', valTotal) }, [valTotal])
-  // ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
-
-  // ________________________________________________
-  // useEffect(() => {
-  //   console.log('valVehicle: (atual)', valVehicle)
-  // }, [valVehicle])
-  // ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
-
-  // ________________________________________________
-  // useEffect(() => {
-  //   console.log('valDados: (atual)', valDados)
-  // }, [valDados])
-  // ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
-
-  // ________________________________________________
-  // useEffect(() => {
-  //   console.log('valadres: (atual)', valAdress)
-  // }, [valAdress])
-  // ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
-
   // ________________________________________________
   useEffect(() => {
     setPass(Cookies.get('pass'))
     is_email_valid(Cookies.get('email'))
     setInicial(true)
+    setAdmin(JSON.stringify(objAdmin));
   }, [])
   // ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
 
@@ -519,10 +475,8 @@ const Ecad = () => {
   // ________________________________________________
   useEffect(() => {
     if(inicial !== false) {
-      allValidations()
       validandoTodos()
     }
-    console.log('todos', valTotal)
   }, [
     rua, numero, bairro, cidade, estado, filesArrayNames,
     cep, ano, modelo, placa, cor, nome, choiceValid,
@@ -530,48 +484,16 @@ const Ecad = () => {
   ])
   // ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
 
-  // ________________________________________________
-  // useEffect(() => {
-  //   adressValidation()
-  // }, [rua, numero, bairro, cidade, estado, cep])
-  // ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
-
-  // ________________________________________________
-  // useEffect(() => {
-  //   vehicleValidation()
-  // }, [ano, modelo, placa, cor])
-  // ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
-
-  // ________________________________________________
-  // useEffect(() => {
-  //   dadosValidations()
-  // }, [nome, rg, cpf, email, tel_01, data_nasc, tel_02])
-  // ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
-
-
-
-  // ________________________________
-  /* [ENTREGADOR] - [GETLOGCLUB]      |      [ENTREGADOR] - [RESTAURANTE] */
-  const hdl_choice_G = () => {
-    setRestauranteValid(true)
-    setOnG(true)
-    setOnR(false)
-    setAdmin('[ENTREGADOR] - [GETLOGCLUB]');
-    setRestaurante('')
-    setChoiceValid(true)
+  const objAdmin = {
+    admin: false,
+    isEntregador: true,
+    isGetLogClub: false,
+    isR: false,
   }
-  const hdl_choice_R = () => {
-    setRestauranteValid(false)
-    setOnG(false)
-    setOnR(true)
-    setAdmin('[ENTREGADOR] - [RESTAURANTE]');
-    setChoiceValid(false)
-  }
-  // ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
-
 
 
   // ________________________________________________
+  
   const is_nome_valid             = (v) => {
     setNome(v)
     v.match(r_nome) ? setNomeValid(true) : setNomeValid(false)
@@ -614,7 +536,7 @@ const Ecad = () => {
   }
   const is_restaurante_valid      = (v) => {
     setRestaurante(v)
-    onR ? v.match(r_nome) ? setRestauranteValid(true) && setChoiceValid(true) : setRestauranteValid(false) && setChoiceValid(false) : ''
+    onR ? v.match(r_nome) ? setRestauranteValid(true) && setChoiceValid(true) && setAdmin(JSON.stringify(objAdmin)) : setRestauranteValid(false) && setChoiceValid(false) && setAdmin(JSON.stringify(objAdmin)) : ''
   }
   const is_data_nasc_valid        = (v) => {
     setData_nasc(v)
@@ -650,35 +572,35 @@ const Ecad = () => {
 
   // ________________________________________________
   const vehicleValidation       = () => {
-    let countV = 0
+    let c = 0
     is_ano_valid(ano)
     is_modelo_valid(modelo)
     is_placa_valid(placa)
     is_cor_valid(cor)
-    if (anoValid) { ++countV }
-    if (modeloValid) { ++countV }
-    if (placaValid) { ++countV }
-    if (corValid) { ++countV }
-    setValVehicle(countV)
+    if (anoValid) { ++c }
+    if (modeloValid) { ++c }
+    if (placaValid) { ++c }
+    if (corValid) { ++c }
+    c === 4 ? setVehicleValid(true) : setVehicleValid(false)
   }
   const adressValidation        = () => {
-    let count = 0
+    let c = 0
     is_rua_valid(rua)
     is_numero_valid(numero)
     is_bairro_valid(bairro)
     is_cidade_valid(cidade)
     is_estado_valid(estado)
     is_cep_valid(cep)
-    if(ruaValid) { ++count }
-    if(numeroValid) { ++count }
-    if(bairroValid) { ++count }
-    if(cidadeValid) { ++count }
-    if(estadoValid) { ++count }
-    if(cepValid)  { ++count }
-    setValAdress(count)
+    if(ruaValid) { ++c }
+    if(numeroValid) { ++c }
+    if(bairroValid) { ++c }
+    if(cidadeValid) { ++c }
+    if(estadoValid) { ++c }
+    if(cepValid)  { ++c }
+    c === 6 ? setAdressValid(true) : setAdressValid(false)
   }
   const dadosValidations        = () => {
-    let countD = 0
+    let c = 0
     is_nome_valid(nome)
     is_rg_valid(rg)
     is_cpf_valid(cpf)
@@ -686,35 +608,20 @@ const Ecad = () => {
     is_tel_01_valid(tel_01)
     is_data_nasc_valid(data_nasc)
     is_tel_02_valid(tel_02)
-    if(nomeValid) { ++countD }
-    if(rgValid) { ++countD }
-    if(cpfValid) { ++countD }
-    if(emailValid) { ++countD }
-    if(tel_01Valid) { ++countD }
-    if(data_nascValid) { ++countD }
-    if(tel_02Valid) { ++countD }
-    setValDados(countD)
+    if(nomeValid) { ++c }
+    if(rgValid) { ++c }
+    if(cpfValid) { ++c }
+    if(emailValid) { ++c }
+    if(tel_01Valid) { ++c }
+    if(data_nascValid) { ++c }
+    if(tel_02Valid) { ++c }
+    c === 7 ? setDocValid(true) : setDocValid(false)
   }
   const allValidations          = () => {
     setValTotal(false)
     dadosValidations()
     adressValidation()
     vehicleValidation()
-    if(valDados === 7) {
-      setDocValid(true)
-    } else {
-      setDocValid(false)
-    }
-    if(valVehicle === 4) {
-      setVehicleValid(true)
-    } else {
-      setVehicleValid(false)
-    }
-    if(valAdress === 6) {
-      setAdressValid(true)
-    } else {
-      setAdressValid(false)
-    }
     if(filesArrayNames.length > 0) {
       setUploadValid(true)
     } else {
@@ -723,7 +630,8 @@ const Ecad = () => {
     }
   }
   const validandoTodos          = () => {
-    if(docValid && vahicleValid && adressValid && choiceValid) {
+    allValidations()
+    if(docValid && vahicleValid && adressValid) {
       if(filesArrayNames.length > 0) { 
         setValTotal(true)
       }
@@ -736,12 +644,6 @@ const Ecad = () => {
 
 
   // ________________________________________________
-  const hdl_restaurante     = (e) => {
-    is_restaurante_valid(e.target.value)
-    setAdmin('[ENTREGADOR] - [RESTAURANTE] - ' + e.target.value)
-    if(restauranteValid) { setChoiceValid(true) }
-  }
-  // onChange, type, value, name, placeholder, textLabel, ga
   const submitHdl = async (e) => {
     e.preventDefault()
 
@@ -750,13 +652,6 @@ const Ecad = () => {
     console.log('[LOG] - valor admin:');
     console.log(admin);
     console.log('‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾');
-    
-    // if(onR) {
-    //   if(admin === '[ENTREGADOR] - [RESTAURANTE]') {
-    //     setAdmin(admin + ' - ' + restaurante)
-    //   }
-    //   console.log('[LOG] - SELECIONOU OUTRO RESTAURANTE - valor do admin:', admin);
-    // }
 
     await axiosSimp({
       method: 'post',
@@ -790,13 +685,6 @@ const Ecad = () => {
 
       if (r.hasOwnProperty('error')) { return console.log('[ERROR] -', r.error) }
 
-      console.log('________________________________');
-      console.log('[LOG] - FEITO O POST PARA USER ');
-      console.log('[LOG] - valor user:');
-      console.log({...dadosCadUser});
-      console.log('‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾');
-
-      
       if (r.hasOwnProperty('idUser')) {
         await axiosSimp({
           method: 'post',
@@ -816,15 +704,7 @@ const Ecad = () => {
           }
         }).then(res2 => res2.data).then(async (r2) => {
           setDadosCadVehicle(r2)
-          // console.log(r2)
           if ( r2.hasOwnProperty('error')) { return console.log('[ERROR] -', r2.error) } else {
-            // AQUI HAVERÁ O UPLOAD DAS IMAGENS CARREGADAS
-            console.log('________________________________');
-            console.log('[LOG] - FEITO O POST PARA VEHICLE ');
-            console.log('[LOG] - valor vehicle:');
-            console.log({...dadosCadVehicle});
-            console.log('‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾');
-
             if(filesArrayNames.length > 0) {
               console.log('tem array');
               console.log(filesArrayNames);
@@ -847,9 +727,6 @@ const Ecad = () => {
                 }).then(res3 => res3.data).then((r3) => console.log(r3))
               })
             }
-            // CRIAÇÃO DOS COOKIES COM AS INFORMAÇÕES QUE SERÃO USADAS PARA O PAINEL ENTREGADOR
-            // AQUI VAI A CHAMADA PARA OUTRA PÁGINA
-            console.log('[SUCESSO] - ROTEANDO PARA A OUTRA PÁGINA!')
             router.push('/loginPage')
           }
         }
@@ -862,24 +739,60 @@ const Ecad = () => {
 
   // ________________________________________________
   // handlers de captura dos dados
-  const hdl_nome            = (e) => { is_nome_valid(e.target.value) }
-  const hdl_rg              = (e) => { is_rg_valid(e.target.value) }
-  const hdl_cpf             = (e) => { is_cpf_valid(e.target.value) }
-  const hdl_email           = (e) => { is_email_valid(e.target.value) }
-  const hdl_tel_01          = (e) => { is_tel_01_valid(e.target.value) }
-  const hdl_data_nasc       = (e) => { is_data_nasc_valid(e.target.value) }
-  const hdl_rua             = (e) => { is_rua_valid(e.target.value) }
-  const hdl_numero          = (e) => { is_numero_valid(e.target.value) }
-  const hdl_obs             = (e) => { setObs(e.target.value) }
-  const hdl_bairro          = (e) => { is_bairro_valid(e.target.value) }
-  const hdl_cidade          = (e) => { is_cidade_valid(e.target.value) }
-  const hdl_estado          = (e) => { is_estado_valid(e.target.value) }
-  const hdl_cep             = (e) => { is_cep_valid(e.target.value) }
-  const hdl_tel_02          = (e) => { is_tel_02_valid(e.target.value) }
-  const hdl_ano             = (e) => { is_ano_valid(e.target.value) }
-  const hdl_modelo          = (e) => { is_modelo_valid(e.target.value) }
-  const hdl_placa           = (e) => { is_placa_valid(e.target.value.toUpperCase()) }
-  const hdl_cor             = (e) => { is_cor_valid(e.target.value) }
+  const hdl_nome            = (e) => { 
+    is_nome_valid(e.target.value) 
+  }
+  const hdl_rg              = (e) => { 
+    is_rg_valid(e.target.value) 
+  }
+  const hdl_cpf             = (e) => { 
+    is_cpf_valid(e.target.value) 
+  }
+  const hdl_email           = (e) => { 
+    is_email_valid(e.target.value) 
+  }
+  const hdl_tel_01          = (e) => { 
+    is_tel_01_valid(e.target.value) 
+  }
+  const hdl_data_nasc       = (e) => { 
+    is_data_nasc_valid(e.target.value) 
+  }
+  const hdl_rua             = (e) => { 
+    is_rua_valid(e.target.value) 
+  }
+  const hdl_numero          = (e) => { 
+    is_numero_valid(e.target.value) 
+  }
+  const hdl_obs             = (e) => { 
+    setObs(e.target.value) 
+  }
+  const hdl_bairro          = (e) => { 
+    is_bairro_valid(e.target.value) 
+  }
+  const hdl_cidade          = (e) => { 
+    is_cidade_valid(e.target.value) 
+  }
+  const hdl_estado          = (e) => { 
+    is_estado_valid(e.target.value) 
+  }
+  const hdl_cep             = (e) => { 
+    is_cep_valid(e.target.value) 
+  }
+  const hdl_tel_02          = (e) => { 
+    is_tel_02_valid(e.target.value) 
+  }
+  const hdl_ano             = (e) => { 
+    is_ano_valid(e.target.value) 
+  }
+  const hdl_modelo          = (e) => { 
+    is_modelo_valid(e.target.value) 
+  }
+  const hdl_placa           = (e) => { 
+    is_placa_valid(e.target.value.toUpperCase()) 
+  }
+  const hdl_cor             = (e) => { 
+    is_cor_valid(e.target.value) 
+  }
   // ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
 
 
@@ -1118,28 +1031,6 @@ const Ecad = () => {
             textLabel={`Telefone emergência`}
             ga="o" type="number" valid={tel_02Valid}
           />
-
-          <S_h3 ga="sub2"> {`Selecione se quer trabalhar pra GetLogClub ou se trabalha para algum restaurante cadastrado!`} </S_h3>
-
-          <S_div_02 ga="p">
-            <S_div_03 on={onG ? 'y' : 'n'} onClick={hdl_choice_G}>
-              <S_img_01  on={onG ? 'y' : 'n'} src="/raposa.svg" />
-            </S_div_03>
-            <S_div_04 on={onR ? 'y' : 'n'} onClick={hdl_choice_R}>
-              <Inpt_01
-                onChange={hdl_restaurante}
-                onFocus={hdl_restaurante}
-                value={restaurante}
-                name={'field_restaurante'}
-                placeholder={`Restaurante`}
-                textLabel={`Restaurante`}
-                disable={onR ? false : true}
-                ml={true} valid={restauranteValid}
-              />
-            </S_div_04>
-          </S_div_02>
-
-          <S_hr_01 ga="hr2" />
 
           <S_h2 ga="tit2"> {`Dados do veículo`} </S_h2>
 
