@@ -205,15 +205,15 @@ const S_btn_02 = styled.button`
 const CardRestaurant = (props) => {
 
   const {
-    ocultar2, fechar,
+    ocultar2, fechar, confirmado, confirmar, editar,
     nomeRest, codeRest, hdlHi, hdlHf , hi, hf,
     validTotal
   } = props
 
-  const [confirmado, setConfirmado] = useState(false)
+//   const [confirmado, setConfirmado] = useState(false)
 
-const confirmar = () => {setConfirmado(true)}
-const editar = () => {setConfirmado(false)}
+// const confirmar = () => {setConfirmado(true)}
+// const editar = () => {setConfirmado(false)}
 
 useEffect(() => { console.log(confirmado) }, [confirmado])
 
@@ -253,7 +253,7 @@ useEffect(() => { console.log(confirmado) }, [confirmado])
           </S_div_03>
           <S_btn_01 onClick={confirmar} disabled={!validTotal} on={!validTotal ? 'n' : 'y'}> {`confirmar horário`} </S_btn_01>
         </S_div_05>
-        <S_btn_02 tem={confirmado ? 'y' : 'n'} onClick={editar} disabled={!validTotal} on={!validTotal ? 'n' : 'y'}> {`editar horário`} </S_btn_02>
+        <S_btn_02 tem={confirmado ? 'y' : 'n'} onClick={editar} on={'y'}> {`editar horário`} </S_btn_02>
         
       </S_div_02>
     </S_div_01>

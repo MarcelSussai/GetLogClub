@@ -490,18 +490,17 @@ const PainelE = () => {
   const [validHora2, setValidHora2]     = useState(false)
   const [completeRest, setCompleteRest] = useState(false)
 
+  const [confirmado1, setConfirmado1] = useState(false)
+  const [confirmado2, setConfirmado2] = useState(false)
 
+  const confirmar1 = () => {setConfirmado1(true)}
+  const editar1 = () => {setConfirmado1(false)}
+  const confirmar2 = () => {setConfirmado2(true)}
+  const editar2 = () => {setConfirmado2(false)}
 
 useEffect(() => {
 
   
-  // objDadosR.map((v, i) => {
-  //   if(v.hasOwnProperty('error')) {
-  //     console.log('[ERRO]')
-  //     setHasError(true)
-  //     setMsgError(v.error)
-  //   }
-  // })
 
   if (onG === 'y') {
     setCompleteRest(true)
@@ -622,111 +621,57 @@ useEffect(() => {
       let min_af2 = hf_2.substring(3, 5)
 
       let hrs = {
-        h1: {
+        _1: {
           i: { h: Number(hor_ai1), m: Number(min_ai1) },
           f: { h: Number(hor_af1), m: Number(min_af1) },
         },
-        h2: {
+        _2: {
           i: { h: Number(hor_ai2), m: Number(min_ai2) },
           f: { h: Number(hor_af2), m: Number(min_af2) },
-        }
+        },
+      }
+      let cond = {
+        c_01: hrs._2.i.h > hrs._1.i.h,
+        c_02: hrs._2.i.h > hrs._1.f.h,
+        c_03: hrs._2.f.h > hrs._1.i.h,
+        c_04: hrs._2.f.h > hrs._1.f.h,
+        c_05: hrs._2.i.h === hrs._1.f.h,
+        c_06: hrs._2.i.m > hrs._1.f.m,
+        c_07: hrs._2.f.h === hrs._1.i.h,
+        c_08: hrs._2.f.m < hrs._1.i.m,
+        c_09: hrs._2.f.h > hrs._2.i.h
+      }
+      
+      let cons = {
+        c_01: cond.c_05 && cond.c_06 && cond.c_09,
+        c_02: cond.c_07 && cond.c_08 && cond.c_09,
+        c_03: cond.c_01 && cond.c_02 && !cond.c_02 && cond.c_09,
+        c_04: !cond.c_01 && !cond.c_03 && cond.c_09 && cond.c_04 && cond.c_09,
+        c_05: cond.c_01 && cond.c_02 && cond.c_03 && cond.c_04 && cond.c_09,
+        c_06: !cond.c_01 && cond.c_02 && !cond.c_03 && cond.c_04 && cond.c_09,
       }
 
-      if (hi_2 === '') {
+      let totc = cons.c_01 || cons.c_02 || cons.c_03 || cons.c_04 || cons.c_05 || cons.c_06
+
+      if (hi_2 === '' && confirmado1 && !confirmado2) {
+        
         console.log('SALVAR')
+
         return ''
       } else {
-        if(hrs.h2.i.h > hrs.h1.i.h) { 
+        // console.log('________________________________')
+        console.log('Válido:', totc)
+        // console.log('‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾')
+        // console.log('________________________________')
+        // console.log('cons - c_01', cons.c_01)
+        // console.log('cons - c_02', cons.c_02)
+        // console.log('cons - c_03', cons.c_03)
+        // console.log('cons - c_04', cons.c_04)
+        // console.log('cons - c_05', cons.c_05)
+        // console.log('cons - c_06', cons.c_06)
+        // console.log('‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾')
 
         }
-        // console.log('Hora inicial 1 =>', hrs.h1.i.h, ' -', 'minuto inicial 1 =>', hrs.h1.i.m )
-        // console.log('Hora final 1 =>', hrs.h1.f.h, ' -', 'minuto final 1 =>', hrs.h1.f.m )
-        
-        // console.log('Hora inicial 2 =>', hrs.h2.i.h, ' -', 'minuto inicial 2 =>', hrs.h2.i.m )
-        // console.log('Hora final 2 =>', hrs.h2.f.h, ' -', 'minuto final 2 =>', hrs.h2.f.m )
-  
-        // console.log(Number( hrs.h1.i.h))
-        // console.log(completeRest)
-      }
-
-
-      // if (
-      //   hor_ai2 < hor_ai1 &&
-      //   hor_af2 < hor_ai1 &&
-      //   hor_ai2 < hor_af1 &&
-      //   hor_af2 < hor_af1 ) {
-      //     setValidHora2(true)
-      //     setCompleteRest(true)
-      //     // console.log('VALIDAR ------TRUE-----', validHora2)
-      //     console.log('[ok] - 1 => anterior', validHora2)
-      //     return ''
-      // } else {
-      //   if (
-      //     hor_ai2 > hor_ai1 &&
-      //     hor_af2 > hor_ai1 &&
-      //     hor_ai2 > hor_af1 &&
-      //     hor_af2 > hor_af1 ) {
-      //       setValidHora2(true)
-      //       setCompleteRest(true)
-      //       // console.log('VALIDAR -----------', validHora2)
-      //       console.log('[ok] - 2 => posterior', validHora2)
-      //       return ''
-      //   } else {
-      //     if (
-      //       hor_ai2 > hor_ai1 &&
-      //       hor_af2 < hor_ai1 &&
-      //       hor_ai2 > hor_af1 &&
-      //       hor_af2 < hor_af1 ) {
-      //         setValidHora2(true)
-      //         setCompleteRest(true)
-      //         // console.log('VALIDAR -----------', validHora2)
-      //         console.log('[ok] - 3 => hi posterior e hf anterior', validHora2)
-      //         return ''
-      //     }
-      //     if (
-      //       hor_ai2 < hor_ai1 &&
-      //       hor_af2 < hor_ai1 &&
-      //       hor_ai2 === hor_af1 && 
-      //       hor_af2 > hor_af1 ) {
-      //         if (min_ai2 > min_af1) {
-      //           setValidHora2(true)
-      //           setCompleteRest(true)
-      //           console.log('[ok] - 4 => posterior', validHora2)
-      //           return ''
-      //         }
-      //         // console.log('VALIDAR -----------', validHora2)
-      //     }
-      //     if (
-      //       hor_ai2 < hor_ai1 &&
-      //       hor_af2 < hor_ai1 &&
-      //       hor_ai2 > hor_af1 &&
-      //       hor_af2 > hor_af1 ) {
-      //         setValidHora2(true)
-      //         setCompleteRest(true)
-      //         // console.log('VALIDAR -----------', validHora2)
-      //         console.log('[ok] - 5 => posterior', validHora2)
-      //         return ''
-      //       } else {
-      //         setValidHora2(false)
-      //         setCompleteRest(false)
-      //         console.log('[FALSE]', validHora2)
-      //         return ''
-      //       // console.log('VALIDAR -----------', validHora2)
-      //     }
-      //     }
-
-      //   if( hor_af2 === hor_ai1 ) {
-      //     min_af2 < min_ai1 ? setValidHora2(true) && setCompleteRest(false) : setValidHora2(false)  && setCompleteRest(true)
-      //   }
-      //   if( hor_ai2 === hor_af1 ) {
-      //     min_ai2 > min_af1 ? setValidHora2(true) && setCompleteRest(false) : setValidHora2(false)  && setCompleteRest(true)
-      //   }
-        // setValidHora2(false)
-        // setCompleteRest(true)
-        // console.log('VALIDAR ----FALSE-----', validHora2)
-     // }
-
-
   }
 
 
@@ -765,6 +710,8 @@ useEffect(() => {
 
   const fechar1 = () => {
     setUmRest(true)
+    setHi_1('')
+    setHf_1('')
     objDadosR.splice(0, 1)
     if(doisRest) {
       setUmRest(false)
@@ -775,6 +722,9 @@ useEffect(() => {
   }
   const fechar2 = () => {
     setDoisRest(true)
+    setHi_2('')
+    setHf_2('')
+    setConfirmado2(false)
     if(umRest) {
       setUmRest(false)
       setIniciou(false)
@@ -855,6 +805,7 @@ useEffect(() => {
   const hdl_completar = async () => {
     validarHora()
   }
+
   return (
   <>
     <S_main>
@@ -897,15 +848,17 @@ useEffect(() => {
                     <S_h3_01 tem={onPesquisa === 'y' ? 'n' : hasError3 ? 'y' : 'n' }>{msgError3}</S_h3_01>
 
                     <CardRestaurant fechar={fechar1}
+                      confirmado={confirmado1} confirmar={confirmar1} editar={editar1}
                       nomeRest={nomeRest1}
                       codeRest={codeRest1}
                       hdlHi={hdl_inpt_hi_1}
                       hdlHf={hdl_inpt_hf_1}
                       hi={hi_1} hf={hf_1} validTotal={validTotal}
-                      ocultar2={umRest? 'n' : iniciou ? onPesquisa === 'y' ? 'n' : !hasError ? 'y' : 'n' : 'n' }
+                      ocultar2={umRest ? 'n' : iniciou ? onPesquisa === 'y' ? 'n' : !hasError ? 'y' : 'n' : 'n' }
                     />
 
                     <CardRestaurant fechar={fechar2}
+                      confirmado={confirmado2} confirmar={confirmar2} editar={editar2}
                       ocultar2={doisRest ? 'n' : iniciou ? onPesquisa === 'y' ? 'n' : !hasError ? 'y' : 'n' : 'n' }
                       nomeRest={nomeRest2}
                       codeRest={codeRest2}
